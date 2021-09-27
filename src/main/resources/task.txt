@@ -1,33 +1,26 @@
-Входные данные
-CSV файл.
-Назначение столбцов:
+Входные данные:
 
+CSV файл:
+Назначение столбцов:
 Идентификатор ордера, сумма, валюта, комментарий
 
 Пример записи:
-
 1,100,USD,оплата заказа
-
 2,123,EUR,оплата заказа
 
 Примечание: все столбцы обязательны
 
-JSON файл.
+JSON файл:
 Пример записи:
-
 {“orderId”:2,”amount”:1.23,”currency”:”USD”,”comment”:”оплата заказа”}
-
 {“orderId”:3,”amount”:1.24,”currency”:”EUR”,”comment”:”оплата заказа”}
 
 Примечание: все поля обязательны
 
 Выходные данные
 {“id”:1, ”amount”:100, ”comment”:”оплата заказа”, ”filename”:”orders.csv”, ”line”:1, ”result”:”OK” }
-
 {“id”:2, ”amount”:123, ”comment”:”оплата заказа”, ”filename”:”orders.csv”, ”line”:2, ”result”:”OK” }
-
 {“id”:3, ”amount”:1.23, ”comment”:”оплата заказа”, ”filename”:”orders.json”, ”line”:1, ”result”:”OK” }
-
 {“id”:4, ”amount”:1.24, ”comment”:”оплата заказа”, ”filename”:”orders.json”, ”line”:2, ”result”:”OK” }
 
 id - идентификатор ордера
