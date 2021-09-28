@@ -1,0 +1,82 @@
+Classes:
+
+class Main {
+
+	private final QueueCapasity;
+	private final MaxCountConsumers;
+	private final MaxCountProducers;
+
+	public static void main(Strings[] args) {
+
+			try {
+				validateArgs(String pathToFile);
+			} catch(Exception ex) {
+					ex.printStackTrace;
+				}
+
+			BlockingQueue<Object> queue = new ArrayBlockingQueue<>();
+
+			runConsumers(MaxCountConsumers);
+			runProducers(MaxCountProducers,queue);
+
+		}
+	}
+
+class Consumer implements Runnable {
+
+	@Override
+	public void runConsumers(MaxCountConsumers) {
+		for (int i = 0 ; i < MaxCountConsumers; i++) {
+				new Thread();
+			}
+		}.start();
+}
+
+/*CountDownlatch*/
+
+
+class CsvProducer implement Runnable {
+	private String pathToFile;
+	private BlockingQueue queue;
+
+	ExecutorService executorService = Executors.newFixedThreadPool(5);
+	executorService.execute(new Runnable() {
+		public void run() {
+
+		}
+	});
+}
+
+class JsonProducer implement Runnable {
+	private String pathToFile;
+	private BlockingQueue queue;
+
+	ExecutorService executorService = Executors.newFixedThreadPool(5);
+	executorService.execute(new Runnable() {
+		public void run() {
+
+		}
+	});
+
+
+}
+
+enum ProducerType {
+	CsvProducer;
+	JsonProducer;
+}
+
+class Model {
+
+	OrderIn {
+
+	}
+
+	OrderOut {
+
+	}
+}
+
+class ConsolePrint {
+
+}
