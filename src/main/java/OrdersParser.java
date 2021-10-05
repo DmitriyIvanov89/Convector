@@ -15,13 +15,6 @@ public class OrdersParser {
         } else {
             System.out.println("Incorrect input");
         }
-
-
-//        try {
-//            validateArgs(pathToFile);
-//        } catch (convector.Exception ex) {
-//            ex.printStackTrace();
-//        }
 //
 //        BlockingQueue<Object> queue = new ArrayBlockingQueue<>();
 //
