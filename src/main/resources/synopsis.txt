@@ -10,7 +10,7 @@ class Main {
 
 			try {
 				validateArgs(String pathToFile);
-			} catch(convector.Exception ex) {
+			} catch(ordersparser.Exception ex) {
 					ex.printStackTrace;
 				}
 
@@ -22,7 +22,7 @@ class Main {
 		}
 	}
 
-class convector.Consumer implements Runnable {
+class ordersparser.Consumer implements Runnable {
 
 	@Override
 	public void runConsumers(MaxCountConsumers) {
@@ -35,7 +35,7 @@ class convector.Consumer implements Runnable {
 /*CountDownlatch*/
 
 
-class convector.CsvProducer implement Runnable {
+class ordersparser.CsvProducer implement Runnable {
 	private String pathToFile;
 	private BlockingQueue queue;
 
@@ -47,7 +47,7 @@ class convector.CsvProducer implement Runnable {
 	});
 }
 
-class convector.JsonProducer implement Runnable {
+class ordersparser.JsonProducer implement Runnable {
 	private String pathToFile;
 	private BlockingQueue queue;
 
@@ -61,12 +61,12 @@ class convector.JsonProducer implement Runnable {
 
 }
 
-enum convector.ProducerType {
-	convector.CsvProducer;
-	convector.JsonProducer;
+enum ordersparser.ProducerType {
+	ordersparser.CsvProducer;
+	ordersparser.JsonProducer;
 }
 
-class convector.Model {
+class ordersparser.Model {
 
 	OrderIn {
 
@@ -77,6 +77,6 @@ class convector.Model {
 	}
 }
 
-class convector.ConsolePrint {
+class ordersparser.ConsolePrint {
 
 }

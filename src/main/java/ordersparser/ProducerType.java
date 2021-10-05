@@ -1,4 +1,4 @@
-package convector;
+package ordersparser;
 
 public enum ProducerType {
     CsvProducer,

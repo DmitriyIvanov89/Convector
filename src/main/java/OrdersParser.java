@@ -1,7 +1,7 @@
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-public class Application {
+public class OrdersParser {
 
     private static int queueCapacity;
     private static int maxConsumersCount;
@@ -11,6 +11,7 @@ public class Application {
 
         String par = args[0];
         String par2 = args[1];
+        System.out.println("Start from cmd");
         System.out.println(par);
         System.out.println(par2);
 //        try {
