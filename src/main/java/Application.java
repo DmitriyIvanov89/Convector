@@ -9,9 +9,13 @@ public class Application {
 
     public static void main(String[] args) {
 
+        String par = args[0];
+        String par2 = args[1];
+        System.out.println(par);
+        System.out.println(par2);
 //        try {
 //            validateArgs(pathToFile);
-//        } catch (Exception ex) {
+//        } catch (convector.Exception ex) {
 //            ex.printStackTrace();
 //        }
 //

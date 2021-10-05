@@ -10,7 +10,7 @@ class Main {
 
 			try {
 				validateArgs(String pathToFile);
-			} catch(Exception ex) {
+			} catch(convector.Exception ex) {
 					ex.printStackTrace;
 				}
 
@@ -22,7 +22,7 @@ class Main {
 		}
 	}
 
-class Consumer implements Runnable {
+class convector.Consumer implements Runnable {
 
 	@Override
 	public void runConsumers(MaxCountConsumers) {
@@ -35,7 +35,7 @@ class Consumer implements Runnable {
 /*CountDownlatch*/
 
 
-class CsvProducer implement Runnable {
+class convector.CsvProducer implement Runnable {
 	private String pathToFile;
 	private BlockingQueue queue;
 
@@ -47,7 +47,7 @@ class CsvProducer implement Runnable {
 	});
 }
 
-class JsonProducer implement Runnable {
+class convector.JsonProducer implement Runnable {
 	private String pathToFile;
 	private BlockingQueue queue;
 
@@ -61,12 +61,12 @@ class JsonProducer implement Runnable {
 
 }
 
-enum ProducerType {
-	CsvProducer;
-	JsonProducer;
+enum convector.ProducerType {
+	convector.CsvProducer;
+	convector.JsonProducer;
 }
 
-class Model {
+class convector.Model {
 
 	OrderIn {
 
@@ -77,6 +77,6 @@ class Model {
 	}
 }
 
-class ConsolePrint {
+class convector.ConsolePrint {
 
 }
