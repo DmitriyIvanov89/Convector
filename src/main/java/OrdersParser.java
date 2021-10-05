@@ -1,3 +1,5 @@
+import ordersparser.Validator;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -9,11 +11,12 @@ public class OrdersParser {
 
     public static void main(String[] args) {
 
-        String par = args[0];
-        String par2 = args[1];
-        System.out.println("Start from cmd");
-        System.out.println(par);
-        System.out.println(par2);
+        if (args.length != 0) {
+
+        } else {
+            System.out.println("Incorrect parameter input");
+        }
+
 //        try {
 //            validateArgs(pathToFile);
 //        } catch (convector.Exception ex) {
