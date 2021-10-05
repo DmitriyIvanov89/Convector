@@ -12,6 +12,7 @@ class Main {
 				validateArgs(String pathToFile);
 				/*
 				- Проверка есть ли файлы по путям из args(pathToFile);
+				(".\src\main\resources\orders.csv",".\src\main\resources\orders.jsonl")
 				- Проверка расширения файла(csv,jsonl);
 				- Если файла нет или неизвестное расширение - пропустить фаил и продолжить валидацию
 				*/
