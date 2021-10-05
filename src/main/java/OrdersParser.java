@@ -1,6 +1,4 @@
-import java.io.File;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import ordersparser.ArgsValidator;
 
 public class OrdersParser {
 
@@ -10,11 +8,14 @@ public class OrdersParser {
 
     public static void main(String[] args) {
 
-        if (args.length != 0) {
+        String[] arr = {".\\src\\main\\resources\\orders44.md",".\\src\\main\\resources\\orders.csv",".\\src\\main\\resources\\orders.jsonl",".\\src\\main\\resources\\orders1.csv"};
 
+        if (arr.length != 0) {
+            new ArgsValidator().validateArgs(arr);
         } else {
-            System.out.println("Incorrect parameter input");
+            System.out.println("Incorrect input");
         }
+
 
 //        try {
 //            validateArgs(pathToFile);
