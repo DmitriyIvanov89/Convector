@@ -15,10 +15,9 @@ class Main {
 				(String... args = {".\\src\\main\\resources\\orders44.md",".\\src\\main\\resources\\orders.csv",".\\src\\main\\resources\\orders.jsonl",".\\src\\main\\resources\\orders1.csv"};)
 				- Проверка расширения файла(csv,jsonl);
 				- Если файла нет или неизвестное расширение - пропустить фаил и продолжить валидацию
+				- Запуск из командной строки: дир с jar файлом: java -jar filename.jar param(path to file)
 				*/
-			} catch(ordersparser.Exception ex) {
-					ex.printStackTrace;
-				}
+			}
 
 			BlockingQueue<Object> queue = new ArrayBlockingQueue<>();
 

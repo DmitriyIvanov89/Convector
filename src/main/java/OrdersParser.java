@@ -1,5 +1,8 @@
 import ordersparser.ArgsValidator;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 public class OrdersParser {
 
     private static int queueCapacity;
@@ -13,9 +16,8 @@ public class OrdersParser {
         } else {
             System.out.println("Incorrect input");
         }
-//
-//        BlockingQueue<Object> queue = new ArrayBlockingQueue<>();
-//
+
+//        BlockingQueue<> queue = new ArrayBlockingQueue<>();
 //        runConsumers(maxConsumersCount);
 //        runProducers(maxProducersCount, queue);
 
