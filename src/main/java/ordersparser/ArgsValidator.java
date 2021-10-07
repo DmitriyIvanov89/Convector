@@ -14,7 +14,7 @@ public class ArgsValidator {
                     System.out.println("Unknown file extension: " + file.getName());
                 }
             }
-            // if true - > передача файла в Consumer (возврат файл?)
+            // if true - > передача файла в Producer (возврат файл? / ProduserCsv or ProducerJsonl взависимости от расширения файла)
         }
     }
 
