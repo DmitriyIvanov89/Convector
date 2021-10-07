@@ -1,6 +1,7 @@
 import ordersparser.ArgsValidator;
 import ordersparser.Consumer;
 import ordersparser.Model;
+import ordersparser.Producer;
 
 import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -10,9 +11,9 @@ import java.util.concurrent.Executors;
 
 public class OrdersParser {
 
-    private static final int queueCapacity = 1000;
-    private static final int maxConsumersCount = 8;
-    private static final int maxProducersCount = 3;
+    private static final int QUEUE_CAPACITY = 1000;
+    private static final int MAX_CONSUMERS_COUNT = 3;
+    private static final int MAX_PRODUCERS_COUNT = 3;
 
     public static void main(String[] args) {
 
@@ -22,23 +23,22 @@ public class OrdersParser {
             System.out.println("Incorrect input");
         }
 
-        BlockingQueue<Model> queue = new ArrayBlockingQueue<>(queueCapacity);
+        BlockingQueue<Model> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 //        runConsumers();
 //        runProducers();
     }
 
     public static void runConsumers(BlockingQueue<Model> queue) {
         Thread consumerThread;
-        for (int i = 0; i < maxConsumersCount; i++) {
-            consumerThread = new Thread(new Consumer());
-            consumerThread.start();
+        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
+            new Thread(new Consumer()).start();
         }
     }
 
     public static void runProducers(File[] files, BlockingQueue<Model> queue) {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         for (File file : files) {
-
+            executorService.execute(new Producer());
         }
     }
 }
