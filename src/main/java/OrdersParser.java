@@ -1,9 +1,12 @@
 import ordersparser.ArgsValidator;
 import ordersparser.Consumer;
 import ordersparser.Model;
+
 import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class OrdersParser {
 
@@ -33,6 +36,9 @@ public class OrdersParser {
     }
 
     public static void runProducers(File[] files, BlockingQueue<Model> queue) {
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        for (File file : files) {
 
+        }
     }
 }
