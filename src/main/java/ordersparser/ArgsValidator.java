@@ -14,13 +14,13 @@ public class ArgsValidator {
                     System.out.println("Unknown file extension: " + file.getName());
                 }
             }
+            // if true - > передача файла в Consumer (возврат файл?)
         }
     }
 
     private boolean getFileExtension(File file) {
         String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1);
         if (fileExtension.equals("csv") || fileExtension.equals("jsonl")) {
-            System.out.println(fileExtension);
             return true;
         }
         return false;
