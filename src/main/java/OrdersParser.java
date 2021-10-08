@@ -13,7 +13,7 @@ public class OrdersParser {
 
     private static final int QUEUE_CAPACITY = 1000;
     private static final int MAX_CONSUMERS_COUNT = 3;
-    private static final int MAX_PRODUCERS_COUNT = 3;
+    private static final int MAX_PRODUCERS_COUNT = 2;
 
     public static void main(String[] args) {
 
@@ -24,8 +24,8 @@ public class OrdersParser {
         }
 
         BlockingQueue<Model> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-//        runConsumers();
-//        runProducers();
+//        runConsumers(queue);
+//        runProducers(files,queue);
     }
 
     public static void runConsumers(BlockingQueue<Model> queue) {
@@ -36,7 +36,7 @@ public class OrdersParser {
     }
 
     public static void runProducers(File[] files, BlockingQueue<Model> queue) {
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         for (File file : files) {
             executorService.execute(new Producer());
         }
