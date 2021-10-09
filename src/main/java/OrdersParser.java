@@ -36,7 +36,7 @@ public class OrdersParser {
     }
 
     public static void runProducers(File[] files, BlockingQueue<Model> queue) {
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         for (File file : files) {
             executorService.execute(new Producer());
         }
