@@ -1,7 +1,4 @@
-import ordersparser.ArgsValidator;
-import ordersparser.Consumer;
-import ordersparser.Model;
-import ordersparser.Producer;
+import ordersparser.*;
 
 import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -13,7 +10,7 @@ public class OrdersParser {
 
     private static final int QUEUE_CAPACITY = 1000;
     private static final int MAX_CONSUMERS_COUNT = 3;
-    private static final int MAX_PRODUCERS_COUNT = 3;
+    private static final int MAX_PRODUCERS_COUNT = 2;
 
     public static void main(String[] args) {
 
@@ -38,7 +35,8 @@ public class OrdersParser {
     public static void runProducers(File[] files, BlockingQueue<Model> queue) {
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         for (File file : files) {
-            executorService.execute(new Producer());
+            executorService.execute(new CsvProducer());
+            executorService.execute(new JsonProducer());
         }
     }
 }
