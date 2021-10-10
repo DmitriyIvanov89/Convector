@@ -1,4 +1,4 @@
-package ordersparser;
+package ordersparser.producer;
 
 public class JsonProducer implements Runnable {
     @Override

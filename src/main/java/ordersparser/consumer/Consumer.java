@@ -1,4 +1,4 @@
-package ordersparser;
+package ordersparser.consumer;
 
 public class Consumer implements Runnable {
 

@@ -38,7 +38,7 @@ class Consumer implements Runnable {
 /*CountDownlatch*/
 
 
-class ordersparser.CsvProducer implement Runnable {
+class ordersparser.producer.CsvProducer implement Runnable {
 	private String pathToFile;
 	private BlockingQueue queue;
 
@@ -50,7 +50,7 @@ class ordersparser.CsvProducer implement Runnable {
 	});
 }
 
-class ordersparser.JsonProducer implement Runnable {
+class ordersparser.producer.JsonProducer implement Runnable {
 	private String pathToFile;
 	private BlockingQueue queue;
 
@@ -64,9 +64,9 @@ class ordersparser.JsonProducer implement Runnable {
 
 }
 
-enum ordersparser.ProducerType {
-	ordersparser.CsvProducer;
-	ordersparser.JsonProducer;
+enum ordersparser.producer.ProducerType {
+	ordersparser.producer.CsvProducer;
+	ordersparser.producer.JsonProducer;
 }
 
 class ordersparser.Model {
@@ -80,6 +80,6 @@ class ordersparser.Model {
 	}
 }
 
-class ordersparser.ConsolePrint {
+class ordersparser.consoleprint.ConsolePrint {
 
 }

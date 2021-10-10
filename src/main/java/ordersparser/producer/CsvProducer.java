@@ -1,4 +1,4 @@
-package ordersparser;
+package ordersparser.producer;
 
 public class CsvProducer implements Runnable {
     @Override
