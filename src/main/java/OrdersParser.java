@@ -37,6 +37,7 @@ public class OrdersParser {
         for (File file : files) {
             executorService.execute(new CsvProducer());
             executorService.execute(new JsonProducer());
+            // countDownLatch
         }
     }
 }
