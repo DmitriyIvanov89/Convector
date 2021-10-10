@@ -1,9 +1,12 @@
-import ordersparser.ArgsValidator;
-import ordersparser.Model;
-import ordersparser.Consumer;
-import ordersparser.Producer;
+
+import ordersparser.consumer.Consumer;
+import ordersparser.producer.CsvProducer;
+import ordersparser.producer.JsonProducer;
+import ordersparser.validator.ArgsValidator;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -23,22 +26,35 @@ public class OrdersParser {
             System.out.println("Incorrect input");
         }
 
-        BlockingQueue<Model> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-//        runConsumers(queue);
-//        runProducers(files,queue);
+
+        BlockingQueue<Object> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
+//        runConsumers();
+//        runProducers();
     }
 
-    public static void runConsumers(BlockingQueue<Model> queue) {
+    public static List<File> getFiles(String[] args) {
+        List<File> filesList = new ArrayList<>();
+        for (String path : args) {
+            File file = new File(path);
+            filesList.add(file);
+        }
+        return filesList;
+    }
+
+    public static void runConsumers(BlockingQueue<Object> queue) {
         Thread consumerThread;
         for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
             new Thread(new Consumer()).start();
         }
     }
 
-    public static void runProducers(File[] files, BlockingQueue<Model> queue) {
+    public static void runProducers(File[] filesList, BlockingQueue<Object> queue) {
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
-        for (File file : files) {
-            executorService.execute(new Producer());
+        for (File file : filesList) {
+            // метод получения типа Producer в зависимости от расширения файла
+            executorService.execute(new CsvProducer());
+            executorService.execute(new JsonProducer());
+            // countDownLatch
         }
     }
 }
