@@ -1,7 +1,5 @@
 package ordersparser.model;
 
-import java.util.Objects;
-
 public class OrderIn {
 
     private String orderId;
@@ -53,9 +51,10 @@ public class OrderIn {
         if (this == obj) return true;
         if (obj == null || obj.getClass() != getClass()) return false;
         OrderIn orderIn = (OrderIn) obj;
-        return Objects.equals(orderId, ((OrderIn) obj).orderId) && Objects.equals(amount, ((OrderIn) obj).amount) &&
-                Objects.equals(currency, ((OrderIn) obj).currency) &&
-                comment.equals(((OrderIn) obj).comment);
+        return orderId.equals(orderIn.orderId)
+                && amount.equals(orderIn.amount)
+                && currency.equals(orderIn.currency)
+                && comment.equals(orderIn.comment);
     }
 
     @Override
