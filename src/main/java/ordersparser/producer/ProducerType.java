@@ -1,6 +1,6 @@
 package ordersparser.producer;
 
 public enum ProducerType {
-    CsvProducer,
-    JsonProducer
+    CSV_PRODUCER,
+    JSON_PRODUCER
 }
