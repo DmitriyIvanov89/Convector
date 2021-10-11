@@ -51,10 +51,10 @@ public class OrdersParser {
     public static void runProducers(File[] filesList, BlockingQueue<Object> queue) {
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         for (File file : filesList) {
-            // метод получения типа Producer в зависимости от расширения файла
-            executorService.execute(new CsvProducer());
-            executorService.execute(new JsonProducer());
-            // countDownLatch
+//             метод получения типа Producer в зависимости от расширения файла
+//            executorService.execute(new CsvProducer());
+//            executorService.execute(new JsonProducer());
+//             countDownLatch
         }
     }
 }
