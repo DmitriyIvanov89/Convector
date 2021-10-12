@@ -1,5 +1,7 @@
 package ordersparser.validator;
 
+import ordersparser.exception.OrdersException;
+
 import java.io.File;
 
 public class ArgsValidator {
@@ -8,10 +10,10 @@ public class ArgsValidator {
         for (String path : args) {
             File file = new File(path);
             if (!file.exists()) {
-                System.out.println("File: " + path + " not found");
+                throw new OrdersException("File: " + path + " not found");
             } else {
                 if (!getFileExtension(file)) {
-                    System.out.println("Unknown file extension: " + file.getName());
+                    throw new OrdersException("Unknown file extension: " + file.getName());
                 }
             }
             // передача в приложение прошедших валидацию файлов

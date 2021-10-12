@@ -42,23 +42,24 @@ public class OrdersParser {
             String extension = path.substring(dotIndex + 1);
             files.put(path, extension);
         }
+
         return files;
     }
 
-//    public static void runConsumers(BlockingQueue<Object> queue) {
-//        Thread consumerThread;
-//        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
-//            new Thread(new Consumer()).start();
-//        }
-//    }
-//
-//    public static void runProducers(File[] filesList, BlockingQueue<Object> queue) {
-//        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
-//        for (File file : filesList) {
-////             метод получения типа Producer в зависимости от расширения файла
+    public static void runConsumers(BlockingQueue<Object> queue) {
+        Thread consumerThread;
+        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
+            new Thread(new Consumer()).start();
+        }
+    }
+
+    public static void runProducers(File[] filesList, BlockingQueue<Object> queue) {
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
+        for (File file : filesList) {
+//             метод получения типа Producer в зависимости от расширения файла
 //            executorService.execute(new CsvProducer(file, queue));
 //            executorService.execute(new JsonProducer(file, queue));
-////             countDownLatch
-//        }
-//    }
+//             countDownLatch
+        }
+    }
 }
