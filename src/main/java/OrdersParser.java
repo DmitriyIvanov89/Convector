@@ -6,7 +6,9 @@ import ordersparser.validator.ArgsValidator;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -26,35 +28,37 @@ public class OrdersParser {
             System.out.println("Incorrect input");
         }
 
+        Map<String, String> files = getFiles(args);
 
-        BlockingQueue<Object> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
+//        BlockingQueue<Object> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 //        runConsumers();
 //        runProducers();
     }
 
-    public static List<File> getFiles(String[] args) {
-        List<File> filesList = new ArrayList<>();
+    public static Map<String, String> getFiles(String[] args) {
+        Map<String, String> files = new HashMap<>();
         for (String path : args) {
-            File file = new File(path);
-            filesList.add(file);
+            int dotIndex = path.lastIndexOf(".");
+            String extension = path.substring(dotIndex + 1);
+            files.put(path, extension);
         }
-        return filesList;
+        return files;
     }
 
-    public static void runConsumers(BlockingQueue<Object> queue) {
-        Thread consumerThread;
-        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
-            new Thread(new Consumer()).start();
-        }
-    }
-
-    public static void runProducers(File[] filesList, BlockingQueue<Object> queue) {
-        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
-        for (File file : filesList) {
-//             метод получения типа Producer в зависимости от расширения файла
-//            executorService.execute(new CsvProducer());
-//            executorService.execute(new JsonProducer());
-//             countDownLatch
-        }
-    }
+//    public static void runConsumers(BlockingQueue<Object> queue) {
+//        Thread consumerThread;
+//        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
+//            new Thread(new Consumer()).start();
+//        }
+//    }
+//
+//    public static void runProducers(File[] filesList, BlockingQueue<Object> queue) {
+//        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
+//        for (File file : filesList) {
+////             метод получения типа Producer в зависимости от расширения файла
+//            executorService.execute(new CsvProducer(file, queue));
+//            executorService.execute(new JsonProducer(file, queue));
+////             countDownLatch
+//        }
+//    }
 }

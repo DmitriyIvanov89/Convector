@@ -8,6 +8,11 @@ public class CsvProducer implements Runnable {
     private BlockingQueue<Object> queue;
     private ProducerType type;
 
+    public CsvProducer(String path, BlockingQueue<Object> queue) {
+        this.path = path;
+        this.queue = queue;
+    }
+
     @Override
     public void run() {
         // Считываение данных из csv файла построчно и передача в очередь(BlockingQueue<Model> queue)
