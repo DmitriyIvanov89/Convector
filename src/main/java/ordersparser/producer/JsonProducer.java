@@ -6,7 +6,7 @@ public class JsonProducer implements Runnable {
 
     private String path;
     private BlockingQueue<Object> queue;
-    private ProducerType type;
+    private final ProducerType type = ProducerType.JSON_PRODUCER;
 
     public JsonProducer(String path, BlockingQueue<Object> queue) {
         this.path = path;
@@ -17,5 +17,9 @@ public class JsonProducer implements Runnable {
     public void run() {
         // Считываение данных из json файла построчно и передача в очередь(BlockingQueue<Model> queue)
 
+    }
+
+    public ProducerType getType() {
+        return type;
     }
 }
