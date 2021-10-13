@@ -6,7 +6,7 @@ public class JsonProducer implements Runnable {
 
     private String path;
     private BlockingQueue<Object> queue;
-    private ProducerType type;
+    private final ProducerType type = ProducerType.JSON_PRODUCER;
 
     public JsonProducer(String path, BlockingQueue<Object> queue) {
         this.path = path;
@@ -20,6 +20,6 @@ public class JsonProducer implements Runnable {
     }
 
     public ProducerType getType() {
-        return ProducerType.JSON_PRODUCER;
+        return type;
     }
 }
