@@ -18,4 +18,8 @@ public class JsonProducer implements Runnable {
         // Считываение данных из json файла построчно и передача в очередь(BlockingQueue<Model> queue)
 
     }
+
+    public ProducerType getType() {
+        return ProducerType.JSON_PRODUCER;
+    }
 }
