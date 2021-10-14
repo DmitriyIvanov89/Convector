@@ -11,7 +11,7 @@ public class JsonProducer implements Runnable {
 
     private final Map<File, String> files;
     private final BlockingQueue<OrderIn> queue;
-    private ProducerType type;
+    private FileExtension type;
 
     public JsonProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
         this.files = files;
@@ -29,7 +29,7 @@ public class JsonProducer implements Runnable {
         }
     }
 
-    public ProducerType getType() {
-        return ProducerType.JSON_PRODUCER;
+    public FileExtension getType() {
+        return FileExtension.JSON;
     }
 }

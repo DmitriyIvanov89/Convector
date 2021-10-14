@@ -10,7 +10,7 @@ public class CsvProducer implements Runnable {
 
     private final Map<File, String> files;
     private final BlockingQueue<OrderIn> queue;
-    private ProducerType type;
+    private FileExtension type;
 
     public CsvProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
         this.files = files;
@@ -23,7 +23,7 @@ public class CsvProducer implements Runnable {
 
     }
 
-    public ProducerType getType() {
-        return ProducerType.CSV_PRODUCER;
+    public FileExtension getType() {
+        return FileExtension.CSV;
     }
 }
