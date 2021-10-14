@@ -1,14 +1,15 @@
 package ordersparser.producer;
 
+import com.google.gson.Gson;
 import ordersparser.model.OrderIn;
 
-import java.io.File;
+import java.io.*;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 public class JsonProducer implements Runnable {
 
-    private Map<File,String> files;
+    private final Map<File, String> files;
     private final BlockingQueue<OrderIn> queue;
     private ProducerType type;
 
@@ -19,8 +20,13 @@ public class JsonProducer implements Runnable {
 
     @Override
     public void run() {
-        // Считываение данных из json файла построчно и передача в очередь(BlockingQueue<Model> queue)
-
+        for (Map.Entry<File, String> entry : files.entrySet()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(entry.getKey()))) {
+                queue.put(new Gson().fromJson(reader, OrderIn.class));
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public ProducerType getType() {
