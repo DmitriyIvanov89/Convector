@@ -1,15 +1,19 @@
 package ordersparser.producer;
 
+import ordersparser.model.OrderIn;
+
+import java.io.File;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 public class JsonProducer implements Runnable {
 
-    private String path;
-    private BlockingQueue<Object> queue;
+    private Map<File,String> files;
+    private final BlockingQueue<OrderIn> queue;
     private ProducerType type;
 
-    public JsonProducer(String path, BlockingQueue<Object> queue) {
-        this.path = path;
+    public JsonProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
+        this.files = files;
         this.queue = queue;
     }
 
