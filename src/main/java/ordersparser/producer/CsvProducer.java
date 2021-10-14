@@ -8,8 +8,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class CsvProducer implements Runnable {
 
-    private Map<File, String> files;
-    private BlockingQueue<OrderIn> queue;
+    private final Map<File, String> files;
+    private final BlockingQueue<OrderIn> queue;
     private ProducerType type;
 
     public CsvProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
