@@ -1,10 +1,13 @@
 package ordersparser.validator;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ArgsValidator {
 
     public void validateArgs(String[] args) {
+        Map<String, String> files = new HashMap<>();
         for (String path : args) {
             File file = new File(path);
             if (!file.exists()) {
@@ -15,6 +18,7 @@ public class ArgsValidator {
                 }
             }
             // передача в приложение прошедших валидацию файлов
+
         }
     }
 
