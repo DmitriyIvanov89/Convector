@@ -8,15 +8,9 @@ import java.util.concurrent.BlockingQueue;
 
 public class CsvProducer implements Runnable {
 
-<<<<<<< HEAD
-    private String path;
-    private BlockingQueue<Object> queue;
-    private final ProducerType type = ProducerType.CSV_PRODUCER;
-=======
     private final Map<File, String> files;
     private final BlockingQueue<OrderIn> queue;
     private FileExtension type;
->>>>>>> 71cdb02cf1d0ce85e9bbec7fdf0f55e2d4448423
 
     public CsvProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
         this.files = files;
@@ -29,12 +23,7 @@ public class CsvProducer implements Runnable {
 
     }
 
-<<<<<<< HEAD
-    public ProducerType getType() {
-        return type;
-=======
     public FileExtension getType() {
         return FileExtension.CSV;
->>>>>>> 71cdb02cf1d0ce85e9bbec7fdf0f55e2d4448423
     }
 }

@@ -9,15 +9,9 @@ import java.util.concurrent.BlockingQueue;
 
 public class JsonProducer implements Runnable {
 
-<<<<<<< HEAD
-    private String path;
-    private BlockingQueue<Object> queue;
-    private final ProducerType type = ProducerType.JSON_PRODUCER;
-=======
     private final Map<File, String> files;
     private final BlockingQueue<OrderIn> queue;
     private FileExtension type;
->>>>>>> 71cdb02cf1d0ce85e9bbec7fdf0f55e2d4448423
 
     public JsonProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
         this.files = files;
@@ -35,12 +29,7 @@ public class JsonProducer implements Runnable {
         }
     }
 
-<<<<<<< HEAD
-    public ProducerType getType() {
-        return type;
-=======
     public FileExtension getType() {
         return FileExtension.JSON;
->>>>>>> 71cdb02cf1d0ce85e9bbec7fdf0f55e2d4448423
     }
 }
