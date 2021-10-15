@@ -9,27 +9,21 @@ import java.util.concurrent.BlockingQueue;
 
 public class JsonProducer implements Runnable {
 
-    private final Map<File, String> files;
+    private Map<File, String> files;
     private final BlockingQueue<OrderIn> queue;
-    private FileExtension type;
+    private ProducerType type;
 
-    public JsonProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
-        this.files = files;
+    public JsonProducer(BlockingQueue<OrderIn> queue, ProducerType type) {
         this.queue = queue;
+        this.type = type;
     }
 
     @Override
     public void run() {
-        for (Map.Entry<File, String> entry : files.entrySet()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(entry.getKey()))) {
-                queue.put(new Gson().fromJson(reader, OrderIn.class));
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
 
-    public FileExtension getType() {
-        return FileExtension.JSON;
+    public ProducerType getType() {
+        return type;
     }
 }

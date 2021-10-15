@@ -2,6 +2,7 @@ import ordersparser.consumer.Consumer;
 import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
+import ordersparser.producer.ProducerType;
 
 import java.io.File;
 import java.util.HashMap;
@@ -42,8 +43,8 @@ public class OrdersParser {
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         for (Map.Entry<File, String> entry : files.entrySet()) {
 //            метод получения типа Producer в зависимости от расширения файла
-            executorService.execute(new CsvProducer(files, queue));
-            executorService.execute(new JsonProducer(files, queue));
+//            executorService.execute(new CsvProducer(files, queue));
+//            executorService.execute(new JsonProducer(files, queue));
 //            countDownLatch
 
         }

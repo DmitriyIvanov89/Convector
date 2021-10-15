@@ -64,7 +64,7 @@ class ordersparser.producer.JsonProducer implement Runnable {
 
 }
 
-enum ordersparser.producer.FileExtension {
+enum ordersparser.producer.ProducerType {
 	ordersparser.producer.CsvProducer;
 	ordersparser.producer.JsonProducer;
 }
