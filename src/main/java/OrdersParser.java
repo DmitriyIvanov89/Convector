@@ -21,7 +21,7 @@ public class OrdersParser {
     public static void main(String[] args) {
 
         if (args.length != 0) {
-            Map<File, String> files = validateArgs(args);
+            Map<String, String> files = validateArgs(args);
         } else {
             System.out.println("Incorrect input");
         }
@@ -43,15 +43,15 @@ public class OrdersParser {
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         for (Map.Entry<File, String> entry : files.entrySet()) {
 //            метод получения типа Producer в зависимости от расширения файла
-//            executorService.execute(new CsvProducer(files, queue));
-//            executorService.execute(new JsonProducer(files, queue));
+//            executorService.execute(new CsvProducer(entry.getKey(), queue, ProducerType.JSON));
+//            executorService.execute(new JsonProducer(entry.getKey(), queue, ProducerType.CSV));
 //            countDownLatch
 
         }
     }
 
-    public static Map<File, String> validateArgs(String[] args) {
-        Map<File, String> files = new HashMap<>();
+    public static Map<String, String> validateArgs(String[] args) {
+        Map<String, String> files = new HashMap<>();
         for (String path : args) {
             File file = new File(path);
             String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1).toLowerCase();
@@ -59,9 +59,9 @@ public class OrdersParser {
                 System.out.println("File: " + path + " not found");
             } else {
                 if (fileExtension.equals("csv") || fileExtension.equals("jsonl")) {
-                    files.put(file, fileExtension);
+                    files.put(path, fileExtension);
                 } else {
-                    System.out.println("Unknown file extension: " + file.getName());
+                    System.out.println("Unknown file extension: " + fileExtension);
                 }
             }
         }

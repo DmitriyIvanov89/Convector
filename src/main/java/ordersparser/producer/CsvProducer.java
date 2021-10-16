@@ -1,25 +1,34 @@
 package ordersparser.producer;
 
 import ordersparser.model.OrderIn;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 
-import java.io.File;
-import java.util.Map;
+import java.io.*;
 import java.util.concurrent.BlockingQueue;
 
 public class CsvProducer implements Runnable {
 
-    private final Map<File, String> files;
+    private final File file;
     private final BlockingQueue<OrderIn> queue;
-    private ProducerType type;
+    private final ProducerType type;
 
-    public CsvProducer(Map<File, String> files, BlockingQueue<OrderIn> queue) {
-        this.files = files;
+    public CsvProducer(File file, BlockingQueue<OrderIn> queue, ProducerType type) {
+        this.file = file;
         this.queue = queue;
+        this.type = type;
     }
 
     @Override
     public void run() {
-        // Считываение данных из csv файла построчно и передача в очередь(BlockingQueue<Model> queue)
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(reader);
+            for (CSVRecord record : records) {
+                queue.put(new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3)));
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
