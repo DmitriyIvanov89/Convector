@@ -3,8 +3,11 @@ import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.producer.ProducerType;
+import ordersparser.validator.Validator;
 
+import javax.xml.transform.sax.SAXResult;
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -21,15 +24,25 @@ public class OrdersParser {
     public static void main(String[] args) {
 
         if (args.length != 0) {
-            Map<String, String> files = validateArgs(args);
+            new Validator().validate(args);
         } else {
-            System.out.println("Incorrect input");
+            System.out.println("Incorrect args!");
         }
 
+        Map<File, String> files = getFiles(args);
         BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 
 //        runConsumers();
 //        runProducers();
+    }
+
+    public static Map<File, String> getFiles(String[] args) {
+        Map<File, String> files = new HashMap<>();
+        for (String path : args) {
+            File file = new File(path);
+            files.put(new File(path), file.getName().substring(file.getName().lastIndexOf(".") + 1).toUpperCase());
+        }
+        return files;
     }
 
     public static void runConsumers(BlockingQueue<OrderIn> queue) {
@@ -50,22 +63,4 @@ public class OrdersParser {
         }
     }
 
-    public static Map<String, String> validateArgs(String[] args) {
-        Map<String, String> files = new HashMap<>();
-        for (String path : args) {
-            File file = new File(path);
-            String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1).toLowerCase();
-            if (!file.exists()) {
-                System.out.println("File: " + path + " not found");
-            } else {
-                if (fileExtension.equals("csv") || fileExtension.equals("jsonl")) {
-                    files.put(path, fileExtension);
-                } else {
-                    System.out.println("Unknown file extension: " + fileExtension);
-                }
-            }
-        }
-
-        return files;
-    }
 }
