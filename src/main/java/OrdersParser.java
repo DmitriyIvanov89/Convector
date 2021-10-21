@@ -5,6 +5,7 @@ import ordersparser.producer.JsonProducer;
 import ordersparser.producer.ProducerType;
 import ordersparser.validator.Validator;
 
+import javax.xml.transform.sax.SAXResult;
 import java.io.File;
 import java.sql.SQLOutput;
 import java.util.HashMap;
@@ -28,11 +29,20 @@ public class OrdersParser {
             System.out.println("Incorrect args!");
         }
 
-//        метод получения списка файлов
-//        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
+        Map<File, String> files = getFiles(args);
+        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 
 //        runConsumers();
 //        runProducers();
+    }
+
+    public static Map<File, String> getFiles(String[] args) {
+        Map<File, String> files = new HashMap<>();
+        for (String path : args) {
+            File file = new File(path);
+            files.put(new File(path), file.getName().substring(file.getName().lastIndexOf(".") + 1).toUpperCase());
+        }
+        return files;
     }
 
     public static void runConsumers(BlockingQueue<OrderIn> queue) {
