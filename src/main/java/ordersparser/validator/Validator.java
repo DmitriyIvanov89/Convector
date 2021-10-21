@@ -15,11 +15,12 @@ public class Validator {
                 System.out.println("File: " + file.getName() + " not found");
                 return false;
             }
-            if (!fileExtension.equals(ProducerType.CSV.getType()) || !fileExtension.equals(ProducerType.JSONL.getType())) {
+            if (!fileExtension.equals(ProducerType.CSV.getType()) && !fileExtension.equals(ProducerType.JSONL.getType())) {
                 System.out.println("Unknown file extension: " + fileExtension + " " + path);
                 return false;
             }
         }
+
         return true;
     }
 }

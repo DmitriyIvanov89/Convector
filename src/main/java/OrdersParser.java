@@ -22,16 +22,6 @@ public class OrdersParser {
 
     public static void main(String[] args) {
 
-
-//        String str = "CSV";
-//        System.out.println(!str.equals(ProducerType.JSONL.getType()));
-//        if (!str.equals(ProducerType.CSV.getType()) | !str.equals(ProducerType.JSONL.getType())) {
-//            System.out.println("ZOPA");
-//        } else {
-//            System.out.println("OK");
-//        }
-
-
         if (args.length != 0) {
             new Validator().validate(args);
         } else {
