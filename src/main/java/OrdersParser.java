@@ -3,8 +3,10 @@ import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.producer.ProducerType;
+import ordersparser.validator.Validator;
 
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -20,13 +22,24 @@ public class OrdersParser {
 
     public static void main(String[] args) {
 
+
+//        String str = "CSV";
+//        System.out.println(!str.equals(ProducerType.JSONL.getType()));
+//        if (!str.equals(ProducerType.CSV.getType()) | !str.equals(ProducerType.JSONL.getType())) {
+//            System.out.println("ZOPA");
+//        } else {
+//            System.out.println("OK");
+//        }
+
+
         if (args.length != 0) {
-            Map<String, String> files = validateArgs(args);
+            new Validator().validate(args);
         } else {
-            System.out.println("Incorrect input");
+            System.out.println("Incorrect args!");
         }
 
-        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
+//        метод получения списка файлов
+//        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 
 //        runConsumers();
 //        runProducers();
@@ -50,22 +63,4 @@ public class OrdersParser {
         }
     }
 
-    public static Map<String, String> validateArgs(String[] args) {
-        Map<String, String> files = new HashMap<>();
-        for (String path : args) {
-            File file = new File(path);
-            String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1).toLowerCase();
-            if (!file.exists()) {
-                System.out.println("File: " + path + " not found");
-            } else {
-                if (fileExtension.equals("csv") || fileExtension.equals("jsonl")) {
-                    files.put(path, fileExtension);
-                } else {
-                    System.out.println("Unknown file extension: " + fileExtension);
-                }
-            }
-        }
-
-        return files;
-    }
 }
