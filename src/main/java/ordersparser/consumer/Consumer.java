@@ -10,14 +10,24 @@ public class Consumer implements Runnable {
 
     private final BlockingQueue<OrderIn> queue;
     private Mapper mapper;
+    private OrderIn orderIn;
 
     public Consumer(BlockingQueue<OrderIn> queue) {
         this.queue = queue;
     }
+    /*
+    * берет сообщение из очереди(OrderIn), создает mapper с методом(конвертация сообщения в OrderOut),
+    * пока не получит poisenpill сообщение
+    * возвращает обьект OrderOut(передает его в ConsolePrint)
+    * */
 
     @Override
     public void run() {
-        // берет сообщение из очереди(OrderIn), создает mapper с методом(конвертация сообщения в OrderOut),
-        // возвращает обьект OrderOut(передает его в ConsolePrint)
+        try {
+            orderIn = queue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 }
