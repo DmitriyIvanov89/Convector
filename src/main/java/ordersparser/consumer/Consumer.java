@@ -1,9 +1,33 @@
 package ordersparser.consumer;
 
+import ordersparser.mapper.Mapper;
+import ordersparser.model.OrderIn;
+import ordersparser.model.OrderOut;
+
+import java.util.concurrent.BlockingQueue;
+
 public class Consumer implements Runnable {
+
+    private final BlockingQueue<OrderIn> queue;
+    private Mapper mapper;
+    private OrderIn orderIn;
+
+    public Consumer(BlockingQueue<OrderIn> queue) {
+        this.queue = queue;
+    }
+    /*
+    * берет сообщение из очереди(OrderIn), создает mapper с методом(конвертация сообщения в OrderOut),
+    * пока не получит poisenpill сообщение
+    * возвращает обьект OrderOut(передает его в ConsolePrint)
+    * */
 
     @Override
     public void run() {
-        // Обработка сообщения из очереди (BlockingQueue<Model> queue), конвектирование в формат json
+        try {
+            orderIn = queue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 }

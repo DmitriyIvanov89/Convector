@@ -70,12 +70,10 @@ public class OrderIn {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("OrderIn: {");
-        stringBuilder.append("orderId = ").append(orderId);
-        stringBuilder.append("amount = ").append(amount);
-        stringBuilder.append("currency = ").append(currency);
-        stringBuilder.append("comment = ").append(comment);
-        stringBuilder.append("}");
-        return stringBuilder.toString();
+        return "OrderIn: {" + "orderId = " + orderId +
+                "amount = " + amount +
+                "currency = " + currency +
+                "comment = " + comment +
+                "}";
     }
 }

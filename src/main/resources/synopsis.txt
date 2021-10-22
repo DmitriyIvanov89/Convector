@@ -13,6 +13,9 @@ class Main {
 				/*
 				- Проверка есть ли файлы по путям из args(pathToFile);
 				(String... args = {".\\src\\main\\resources\\orders44.md",".\\src\\main\\resources\\orders.csv",".\\src\\main\\resources\\orders.jsonl",".\\src\\main\\resources\\orders1.csv"};)
+				.\\src\\main\\resources\\orders1.csv .\\src\\main\\resources\\orders44.md .\\src\\main\\resources\\orders.csv .\\src\\main\\resources\\orders.jsonl .\\src\\main\\resources\\orders1.csv
+				.\\src\\main\\resources\\orders.csv .\\src\\main\\resources\\orders.jsonl
+				.\\src\\main\\resources\\orders.md .\\src\\main\\resources\\orders.jsonl
 				- Проверка расширения файла(csv,jsonl);
 				- Если файла нет или неизвестное расширение - пропустить фаил и продолжить валидацию
 				- Запуск из командной строки: дир с jar файлом: java -jar filename.jar param(path to file)

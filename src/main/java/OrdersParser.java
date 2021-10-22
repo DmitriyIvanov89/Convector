@@ -1,13 +1,14 @@
-
 import ordersparser.consumer.Consumer;
+import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
-import ordersparser.validator.ArgsValidator;
+import ordersparser.producer.ProducerType;
+import ordersparser.validator.Validator;
 
+import javax.xml.transform.sax.SAXResult;
 import java.io.File;
-import java.util.ArrayList;
+import java.sql.SQLOutput;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -16,50 +17,51 @@ import java.util.concurrent.Executors;
 
 public class OrdersParser {
 
-    private static final int QUEUE_CAPACITY = 1000;
+    private static final int QUEUE_CAPACITY = 10;
     private static final int MAX_CONSUMERS_COUNT = 3;
     private static final int MAX_PRODUCERS_COUNT = 2;
 
     public static void main(String[] args) {
 
         if (args.length != 0) {
-            new ArgsValidator().validateArgs(args);
+            new Validator().validate(args);
         } else {
-            System.out.println("Incorrect input");
+            System.out.println("Incorrect args!");
         }
 
-        Map<String, String> files = getFiles(args);
+        Map<File, String> files = getFiles(args);
+        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 
-//        BlockingQueue<Object> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 //        runConsumers();
 //        runProducers();
     }
 
-    public static Map<String, String> getFiles(String[] args) {
-        Map<String, String> files = new HashMap<>();
+    public static Map<File, String> getFiles(String[] args) {
+        Map<File, String> files = new HashMap<>();
         for (String path : args) {
-            int dotIndex = path.lastIndexOf(".");
-            String extension = path.substring(dotIndex + 1);
-            files.put(path, extension);
+            File file = new File(path);
+            files.put(new File(path), file.getName().substring(file.getName().lastIndexOf(".") + 1).toUpperCase());
         }
 
         return files;
     }
 
-    public static void runConsumers(BlockingQueue<Object> queue) {
+    public static void runConsumers(BlockingQueue<OrderIn> queue) {
         Thread consumerThread;
         for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
-            new Thread(new Consumer()).start();
+            new Thread(new Consumer(queue)).start();
         }
     }
 
-    public static void runProducers(File[] filesList, BlockingQueue<Object> queue) {
+    public static void runProducers(Map<File, String> files, BlockingQueue<OrderIn> queue) {
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
-        for (File file : filesList) {
-//             метод получения типа Producer в зависимости от расширения файла
-//            executorService.execute(new CsvProducer(file, queue));
-//            executorService.execute(new JsonProducer(file, queue));
-//             countDownLatch
+        for (Map.Entry<File, String> entry : files.entrySet()) {
+//            получение типа Producer в зависимости от расширения файла
+//            executorService.execute(new CsvProducer(entry.getKey(), queue, ProducerType.JSON));
+//            executorService.execute(new JsonProducer(entry.getKey(), queue, ProducerType.CSV));
+//            countDownLatch
+
         }
     }
+
 }
