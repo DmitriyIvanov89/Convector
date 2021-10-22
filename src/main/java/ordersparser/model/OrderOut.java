@@ -12,16 +12,6 @@ public class OrderOut {
     private Integer line;
     private String result;
 
-    public OrderOut(int id, float amount, String currency, String comment, String fileName, int line, String result) {
-        this.id = id;
-        this.amount = amount;
-        this.currency = currency;
-        this.comment = comment;
-        this.fileName = fileName;
-        this.line = line;
-        this.result = result;
-    }
-
     public int getId() {
         return id;
     }

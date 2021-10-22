@@ -7,6 +7,9 @@ public class OrderIn {
     private String currency;
     private String comment;
 
+    public OrderIn() {
+    }
+
     public OrderIn(String orderId, String amount, String currency, String comment) {
         this.orderId = orderId;
         this.amount = amount;

@@ -14,7 +14,8 @@ public class Mapper {
 
     private OrderIn orderIn;
 
-    public OrderOut convertInToOut() {
+    public OrderOut convertInToOut(OrderIn orderIn) {
+        OrderOut orderOut = new OrderOut();
         return null;
     }
 
