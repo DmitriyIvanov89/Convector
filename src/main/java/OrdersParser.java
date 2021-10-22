@@ -42,6 +42,7 @@ public class OrdersParser {
             File file = new File(path);
             files.put(new File(path), file.getName().substring(file.getName().lastIndexOf(".") + 1).toUpperCase());
         }
+
         return files;
     }
 
