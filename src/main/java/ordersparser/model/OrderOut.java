@@ -1,5 +1,7 @@
 package ordersparser.model;
 
+import java.util.Objects;
+
 public class OrderOut {
 
     private Integer id;
@@ -81,9 +83,9 @@ public class OrderOut {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         OrderOut orderOut = (OrderOut) obj;
-        return id == orderOut.id
-                && amount == orderOut.amount
-                && line == orderOut.line
+        return Objects.equals(id, orderOut.id)
+                && Objects.equals(amount, orderOut.amount)
+                && Objects.equals(line, orderOut.line)
                 && currency.equals(orderOut.currency)
                 && fileName.equals(orderOut.fileName)
                 && result.equals(orderOut.result);
@@ -105,13 +107,11 @@ public class OrderOut {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{id: ").append(id).append(", ");
-        stringBuilder.append("amount: ").append(amount).append(", ");
-        stringBuilder.append("comment: ").append(comment).append(", ");
-        stringBuilder.append("filename: ").append(fileName).append(", ");
-        stringBuilder.append("line: ").append(line).append(", ");
-        stringBuilder.append("result: ").append(result).append(" }");
-        return stringBuilder.toString();
+        return "{id: " + id + ", " +
+                "amount: " + amount + ", " +
+                "comment: " + comment + ", " +
+                "filename: " + fileName + ", " +
+                "line: " + line + ", " +
+                "result: " + result + " }";
     }
 }

@@ -29,7 +29,6 @@ public class CsvProducer implements Runnable {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     public ProducerType getType() {
