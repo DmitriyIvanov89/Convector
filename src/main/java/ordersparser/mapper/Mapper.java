@@ -1,11 +1,18 @@
 package ordersparser.mapper;
 
+import ordersparser.model.OrderIn;
 import ordersparser.model.OrderOut;
 
 import java.math.BigDecimal;
 
 public class Mapper {
 
+    /*
+     * конвертация модели OrderIn в OrderOut
+     * построение строки с ошибкой
+     * */
+
+    private OrderIn orderIn;
 
     public OrderOut convertInToOut() {
         return null;
