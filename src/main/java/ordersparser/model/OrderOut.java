@@ -1,22 +1,23 @@
 package ordersparser.model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class OrderOut {
 
-    private Integer id;
-    private Float amount;
+    private Long id;
+    private BigDecimal amount;
     private String currency;
     private String comment;
     private String fileName;
-    private Integer line;
+    private Long line;
     private String result;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public float getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
@@ -32,7 +33,7 @@ public class OrderOut {
         return fileName;
     }
 
-    public int getLine() {
+    public Long getLine() {
         return line;
     }
 
@@ -40,11 +41,11 @@ public class OrderOut {
         return result;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -60,7 +61,7 @@ public class OrderOut {
         this.fileName = fileName;
     }
 
-    public void setLine(int line) {
+    public void setLine(Long line) {
         this.line = line;
     }
 

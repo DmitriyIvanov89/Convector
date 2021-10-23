@@ -4,10 +4,7 @@ import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.producer.ProducerType;
 import ordersparser.validator.Validator;
-
-import javax.xml.transform.sax.SAXResult;
 import java.io.File;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;

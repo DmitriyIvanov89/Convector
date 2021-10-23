@@ -29,6 +29,9 @@ public class CsvProducer implements Runnable {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        /*
+         * добавление в очередь poison_pill
+         * */
     }
 
     public ProducerType getType() {

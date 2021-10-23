@@ -3,6 +3,7 @@ package ordersparser.consumer;
 import ordersparser.mapper.Mapper;
 import ordersparser.model.OrderIn;
 import ordersparser.model.OrderOut;
+import ordersparser.producer.ProducerType;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -25,11 +26,13 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
         Mapper mapper = new Mapper();
-        try {
-            mapper.convertInToOut(queue.take());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            while (queue.take().equals(POISON_PILL)) {
+//                mapper.convertInToOut(queue.take());
+//            }
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

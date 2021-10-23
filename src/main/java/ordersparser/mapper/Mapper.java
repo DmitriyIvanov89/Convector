@@ -14,13 +14,22 @@ public class Mapper {
 
     private OrderIn orderIn;
 
-    public OrderOut convertInToOut(OrderIn orderIn) {
+    public OrderOut convertInToOut(OrderIn orderIn, String fileName, Long line, String errorMsg) {
         OrderOut orderOut = new OrderOut();
-        return null;
-    }
+        if (orderOut != null) {
+            orderOut.setId(convertId());
+            orderOut.setAmount(convertAmount());
+            orderOut.setCurrency(orderIn.getCurrency());
+            orderOut.setComment(orderIn.getComment());
+            orderOut.setFileName(fileName);
+            orderOut.setLine(line);
+            orderOut.setResult("OK");
 
-    public String buildErrorMessage() {
-        return null;
+        } else {
+            orderOut.setResult("Wrong");
+        }
+
+        return orderOut;
     }
 
     public Long convertId() {
@@ -28,6 +37,10 @@ public class Mapper {
     }
 
     public BigDecimal convertAmount() {
+        return null;
+    }
+
+    public String buildErrorMessage() {
         return null;
     }
 
