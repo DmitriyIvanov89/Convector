@@ -18,7 +18,7 @@ public class Mapper {
             orderOut.setComment(orderIn.getComment());
             orderOut.setFileName();
             orderOut.setLine();
-            // вывод результата конвектирования
+            // вывод результата конвектирования(есть ли ошибки)
             orderOut.setResult("OK");
         } else {
             orderOut.setResult("Wrong");
