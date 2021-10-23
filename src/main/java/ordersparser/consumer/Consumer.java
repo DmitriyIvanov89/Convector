@@ -25,10 +25,9 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        Mapper mapper = new Mapper();
 //        try {
 //            while (queue.take().equals(POISON_PILL)) {
-//                mapper.convertInToOut(queue.take());
+//                new Mapper().convertAmount(queue.take(),);
 //            }
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
