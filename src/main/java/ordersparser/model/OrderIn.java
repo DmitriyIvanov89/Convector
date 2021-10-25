@@ -6,6 +6,9 @@ public class OrderIn {
     private String amount;
     private String currency;
     private String comment;
+    /*
+    * доп параметры сообщения: номер строки считываемого файла, readLine(), filename, flag poisen_pill
+    * */
 
     public OrderIn() {
     }
