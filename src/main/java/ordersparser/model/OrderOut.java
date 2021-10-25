@@ -5,19 +5,19 @@ import java.util.Objects;
 
 public class OrderOut {
 
-    private Long id;
-    private BigDecimal amount;
+    private Integer id;
+    private Float amount;
     private String currency;
     private String comment;
     private String fileName;
-    private Long line;
+    private Integer line;
     private String result;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public BigDecimal getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
@@ -33,7 +33,7 @@ public class OrderOut {
         return fileName;
     }
 
-    public Long getLine() {
+    public Integer getLine() {
         return line;
     }
 
@@ -41,11 +41,11 @@ public class OrderOut {
         return result;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
@@ -61,7 +61,7 @@ public class OrderOut {
         this.fileName = fileName;
     }
 
-    public void setLine(Long line) {
+    public void setLine(Integer line) {
         this.line = line;
     }
 
