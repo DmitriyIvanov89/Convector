@@ -6,7 +6,6 @@ import ordersparser.producer.JsonProducer;
 import ordersparser.producer.ProducerType;
 import ordersparser.validator.Validator;
 
-import javax.swing.plaf.IconUIResource;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
