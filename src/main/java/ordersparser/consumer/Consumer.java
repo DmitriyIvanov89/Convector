@@ -12,7 +12,6 @@ public class Consumer implements Runnable {
 
     private final BlockingQueue<OrderIn> queue;
     private Mapper mapper;
-    private OrderIn orderIn;
 
     public Consumer(BlockingQueue<OrderIn> queue) {
         this.queue = queue;
@@ -26,7 +25,7 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
 //        try {
-//            while (queue.take().equals(POISON_PILL)) {
+//            while (!(queue.take().equals(POISON_PILL))) {
 //                new Mapper().convertAmount(queue.take(),);
 //            }
 //        } catch (InterruptedException e) {

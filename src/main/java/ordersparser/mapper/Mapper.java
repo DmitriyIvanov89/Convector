@@ -11,7 +11,7 @@ public class Mapper {
 
     public OrderOut convertInToOut(OrderIn orderIn) {
         OrderOut orderOut = new OrderOut();
-        if (orderOut != null) {
+        if (orderIn != null) {
             orderOut.setId(Integer.parseInt(orderIn.getOrderId()));
             orderOut.setAmount(Float.parseFloat(orderIn.getAmount()));
             orderOut.setCurrency(orderIn.getCurrency());
