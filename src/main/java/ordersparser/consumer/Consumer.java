@@ -25,13 +25,13 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-//        try {
-//            while (queue.take().equals(POISON_PILL)) {
-//                new Mapper().convertAmount(queue.take(),);
-//            }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            while (queue.take().) {
+                new Mapper().convertAmount(queue.take(),);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

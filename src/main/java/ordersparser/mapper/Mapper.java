@@ -11,17 +11,17 @@ public class Mapper {
 
     public OrderOut convertInToOut(OrderIn orderIn) {
         OrderOut orderOut = new OrderOut();
-        if (orderOut != null) {
+        if (orderIn != null) {
             orderOut.setId(convertId());
             orderOut.setAmount(convertAmount());
             orderOut.setCurrency(orderIn.getCurrency());
             orderOut.setComment(orderIn.getComment());
-            orderOut.setFileName();
-            orderOut.setLine();
+            orderOut.setFileName(orderIn.getFileName());
+            orderOut.setLine(orderIn.getLine());
             // вывод результата конвектирования(есть ли ошибки)
             orderOut.setResult("OK");
         } else {
-            orderOut.setResult("Wrong");
+            orderOut.setResult("Wrong message");
         }
 
         return orderOut;

@@ -6,15 +6,20 @@ public class OrderIn {
     private String amount;
     private String currency;
     private String comment;
+    private String fileName;
+    private String line;
+    private String messageType;
 
     public OrderIn() {
     }
 
-    public OrderIn(String orderId, String amount, String currency, String comment) {
+    public OrderIn(String orderId, String amount, String currency, String comment, String fileName, String messageType) {
         this.orderId = orderId;
         this.amount = amount;
         this.currency = currency;
         this.comment = comment;
+        this.fileName = fileName;
+        this.messageType = messageType;
     }
 
     public String getOrderId() {
@@ -33,6 +38,18 @@ public class OrderIn {
         return comment;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public String getLine() {
+        return line;
+    }
+
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
@@ -47,6 +64,18 @@ public class OrderIn {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 
     @Override

@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class OrderOut {
 
-    private Long id;
-    private BigDecimal amount;
+    private Integer id;
+    private Float amount;
     private String currency;
     private String comment;
     private String fileName;
-    private Long line;
+    private Integer line;
     private String result;
 
     public Long getId() {
