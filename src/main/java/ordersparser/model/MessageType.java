@@ -3,7 +3,7 @@ package ordersparser.model;
 public enum MessageType {
 
     REGULAR("REGULAR"),
-    POISON_PILL("POISONPILL");
+    POISON_PILL("POISON_PILL");
 
     private final String messageType;
 

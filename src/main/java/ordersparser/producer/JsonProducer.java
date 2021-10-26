@@ -1,6 +1,7 @@
 package ordersparser.producer;
 
 import com.google.gson.Gson;
+import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 
 import java.io.*;
@@ -10,9 +11,10 @@ public class JsonProducer implements Runnable {
 
     private final File file;
     private final BlockingQueue<OrderIn> queue;
-    private final ProducerType type;
+    private final MessageType type;
 
-    public JsonProducer(File file, BlockingQueue<OrderIn> queue, ProducerType type) {
+
+    public JsonProducer(File file, BlockingQueue<OrderIn> queue, MessageType type) {
         this.file = file;
         this.queue = queue;
         this.type = type;
@@ -27,7 +29,7 @@ public class JsonProducer implements Runnable {
         }
     }
 
-    public ProducerType getType() {
+    public MessageType getType() {
         return type;
     }
 }

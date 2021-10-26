@@ -1,5 +1,6 @@
 package ordersparser.producer;
 
+import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -11,9 +12,9 @@ public class CsvProducer implements Runnable {
 
     private final File file;
     private final BlockingQueue<OrderIn> queue;
-    private final ProducerType type;
+    private final MessageType type;
 
-    public CsvProducer(File file, BlockingQueue<OrderIn> queue, ProducerType type) {
+    public CsvProducer(File file, BlockingQueue<OrderIn> queue, MessageType type) {
         this.file = file;
         this.queue = queue;
         this.type = type;
@@ -24,17 +25,14 @@ public class CsvProducer implements Runnable {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(reader);
             for (CSVRecord record : records) {
-                queue.put(new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4)));
+                queue.put(new OrderIn());
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        /*
-         * добавление в очередь poison_pill
-         * */
     }
 
-    public ProducerType getType() {
+    public MessageType getType() {
         return type;
     }
 }
