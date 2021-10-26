@@ -12,12 +12,12 @@ public class Mapper {
     public OrderOut convertInToOut(OrderIn orderIn) {
         OrderOut orderOut = new OrderOut();
         if (orderIn != null) {
-            orderOut.setId(convertId());
-            orderOut.setAmount(convertAmount());
+            orderOut.setId(Integer.parseInt(orderIn.getOrderId()));
+            orderOut.setAmount(Float.parseFloat(orderIn.getAmount()));
             orderOut.setCurrency(orderIn.getCurrency());
             orderOut.setComment(orderIn.getComment());
             orderOut.setFileName(orderIn.getFileName());
-            orderOut.setLine(orderIn.getLine());
+            orderOut.setLine(Integer.parseInt(orderIn.getLine()));
             // вывод результата конвектирования(есть ли ошибки)
             orderOut.setResult("OK");
         } else {
@@ -25,14 +25,6 @@ public class Mapper {
         }
 
         return orderOut;
-    }
-
-    public Long convertId() {
-        return null;
-    }
-
-    public BigDecimal convertAmount() {
-        return null;
     }
 
     public String buildErrorMessage() {

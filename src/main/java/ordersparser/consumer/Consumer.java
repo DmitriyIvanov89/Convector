@@ -1,6 +1,7 @@
 package ordersparser.consumer;
 
 import ordersparser.mapper.Mapper;
+import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 import ordersparser.model.OrderOut;
 import ordersparser.producer.ProducerType;
@@ -12,7 +13,6 @@ public class Consumer implements Runnable {
 
     private final BlockingQueue<OrderIn> queue;
     private Mapper mapper;
-    private OrderIn orderIn;
 
     public Consumer(BlockingQueue<OrderIn> queue) {
         this.queue = queue;
@@ -25,9 +25,10 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
+
         try {
-            while (queue.take().) {
-                new Mapper().convertAmount(queue.take(),);
+            while (!queue.take().getMessageType().equals(MessageType.POISON_PILL.getMessageType())) {
+//                new Mapper().convertAmount(queue.take(), );
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

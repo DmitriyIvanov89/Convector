@@ -11,7 +11,6 @@ public class JsonProducer implements Runnable {
     private final File file;
     private final BlockingQueue<OrderIn> queue;
     private final ProducerType type;
-    private OrderIn POISON_PILL;
 
     public JsonProducer(File file, BlockingQueue<OrderIn> queue, ProducerType type) {
         this.file = file;
@@ -26,9 +25,6 @@ public class JsonProducer implements Runnable {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        /*
-        * добавление в очередь poison_pill
-        * */
     }
 
     public ProducerType getType() {
