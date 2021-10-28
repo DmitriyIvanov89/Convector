@@ -25,7 +25,7 @@ public class CsvProducer implements Runnable {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(reader);
             for (CSVRecord record : records) {
-                queue.put(new OrderIn());
+                queue.put(new OrderIn(record.get(0),record.get(1),record.get(2),record.get(3),record.get(4)));
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
