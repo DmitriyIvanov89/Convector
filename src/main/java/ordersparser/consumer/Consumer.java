@@ -28,7 +28,7 @@ public class Consumer implements Runnable {
 
         try {
             while (!queue.take().getMessageType().equals(MessageType.POISON_PILL.getMessageType())) {
-//                new Mapper().convertAmount(queue.take(), );
+                new Mapper().convertInToOut(queue.take());
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

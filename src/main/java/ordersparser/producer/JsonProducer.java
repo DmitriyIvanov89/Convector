@@ -20,6 +20,9 @@ public class JsonProducer implements Runnable {
         this.type = type;
     }
 
+    /*библиотека с JsonObject -> передача параметров filename и line в
+    * message OrderIn*/
+
     @Override
     public void run() {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
