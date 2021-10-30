@@ -21,11 +21,11 @@ public class OrdersParser {
 
     public static void main(String[] args) {
 
-//        if (args.length != 0) {
-//            new Validator().validate(args);
-//        } else {
-//            System.out.println("Incorrect args!");
-//        }
+        if (args.length != 0) {
+            new Validator().validateArgs(args);
+        } else {
+            System.out.println("Incorrect args!");
+        }
 
 //        Map<String, String> files = getFiles(args);
 //        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);

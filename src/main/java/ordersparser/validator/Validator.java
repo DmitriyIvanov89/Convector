@@ -18,7 +18,7 @@ public class Validator {
                 return false;
             }
             if (!fileExtension.equals(ProducerType.CSV.getType()) && !fileExtension.equals(ProducerType.JSONL.getType())) {
-                System.out.printf("Unknown file extension: %s", fileExtension);
+                System.out.printf("Unknown file extension: %s on the path: %s", fileExtension, path);
                 return false;
             }
         }
