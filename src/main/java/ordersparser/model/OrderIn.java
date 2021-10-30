@@ -7,13 +7,9 @@ public class OrderIn {
     private String currency;
     private String comment;
     private String fileName;
-    private String line;
-    private MessageType messageType;
+    private String messageType;
 
-    public OrderIn() {
-    }
-
-    public OrderIn(String orderId, String amount, String currency, String comment, String fileName, MessageType messageType) {
+    public OrderIn(String orderId, String amount, String currency, String comment, String fileName, String messageType) {
         this.orderId = orderId;
         this.amount = amount;
         this.currency = currency;
@@ -42,12 +38,8 @@ public class OrderIn {
         return fileName;
     }
 
-    public MessageType getMessageType() {
+    public String getMessageType() {
         return messageType;
-    }
-
-    public String getLine() {
-        return line;
     }
 
     public void setOrderId(String orderId) {
@@ -70,11 +62,7 @@ public class OrderIn {
         this.fileName = fileName;
     }
 
-    public void setLine(String line) {
-        this.line = line;
-    }
-
-    public void setMessageType(MessageType messageType) {
+    public void setMessageType(String messageType) {
         this.messageType = messageType;
     }
 

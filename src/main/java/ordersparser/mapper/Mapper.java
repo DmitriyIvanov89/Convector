@@ -17,7 +17,7 @@ public class Mapper {
             orderOut.setCurrency(orderIn.getCurrency());
             orderOut.setComment(orderIn.getComment());
             orderOut.setFileName(orderIn.getFileName());
-            orderOut.setLine(Integer.parseInt(orderIn.getLine()));
+//            orderOut.setLine(Integer.parseInt(orderIn.getLine()));
             // вывод результата конвектирования(есть ли ошибки)
             orderOut.setResult("OK");
         } else {

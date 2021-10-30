@@ -31,7 +31,7 @@ public class OrdersParser {
 //
 //        Map<String, String> files = getFiles(args);
 //        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-        String path = ".\\src\\main\\resources\\orders.jsonl";
+        String path = ".\\src\\main\\resources\\orders.csv";
         MessageType messageType = MessageType.REGULAR;
         testReader(path, messageType);
         System.out.println("end");
@@ -87,12 +87,10 @@ public class OrdersParser {
     }
 
     public static OrderIn testReader(String path, MessageType messageType) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+
         OrderIn str;
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-            str = objectMapper.readValue(reader, OrderIn.class);
-            str.setMessageType(messageType);
-            str.setFileName(Paths.get(path).getFileName());
+
         }
         System.out.println("ok");
         return str;

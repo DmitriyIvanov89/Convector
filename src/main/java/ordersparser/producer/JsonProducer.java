@@ -1,6 +1,8 @@
 package ordersparser.producer;
 
 //import com.google.gson.Gson;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 
@@ -14,6 +16,7 @@ public class JsonProducer implements Runnable {
     private final String filePath;
     private final BlockingQueue<OrderIn> queue;
     private final MessageType type;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     public JsonProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type) {
@@ -22,17 +25,16 @@ public class JsonProducer implements Runnable {
         this.type = type;
     }
 
-    /*библиотека с JsonObject -> передача параметров filename и line в
-     * message OrderIn*/
-
     @Override
     public void run() {
-//        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
-//            OrderIn message = new OrderIn();
-//            queue.put(new Gson().fromJson(reader, OrderIn.class));
-//        } catch (IOException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            OrderIn message = objectMapper.readValue(reader, OrderIn.class);
+            message.setFileName(Paths.get(filePath).getFileName().toString());
+            message.setMessageType(type.getMessageType());
+            queue.put(message);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public MessageType getType() {
