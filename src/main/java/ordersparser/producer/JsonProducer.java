@@ -1,7 +1,5 @@
 package ordersparser.producer;
 
-//import com.google.gson.Gson;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;

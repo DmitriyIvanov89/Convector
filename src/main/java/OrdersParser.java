@@ -1,19 +1,17 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.google.gson.Gson;
 //import com.google.gson.JsonObject;
-import ordersparser.consumer.Consumer;
+
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
-import ordersparser.producer.CsvProducer;
-import ordersparser.producer.JsonProducer;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.*;
+import java.util.List;
 
 public class OrdersParser {
 
@@ -31,51 +29,46 @@ public class OrdersParser {
 //
 //        Map<String, String> files = getFiles(args);
 //        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-        String path = ".\\src\\main\\resources\\orders.csv";
-        MessageType messageType = MessageType.REGULAR;
-        testReader(path, messageType);
-        System.out.println("end");
-
 
 //        runConsumers();
 //        runProducers();
     }
 
-    public static Map<String, String> getFiles(String[] args) {
-        Map<String, String> files = new HashMap<>();
-        for (String path : args) {
-            files.put(path, path.substring(path.lastIndexOf(".") + 1).toUpperCase());
-        }
+//    public static Map<String, String> getFiles(String[] args) {
+//        Map<String, String> files = new HashMap<>();
+//        for (String path : args) {
+//            files.put(path, path.substring(path.lastIndexOf(".") + 1).toUpperCase());
+//        }
+//
+//        return files;
+//    }
+//
+//    public static void runConsumers(BlockingQueue<OrderIn> queue) {
+//        Thread consumerThread;
+//        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
+//            new Thread(new Consumer(queue)).start();
+//        }
+//    }
 
-        return files;
-    }
-
-    public static void runConsumers(BlockingQueue<OrderIn> queue) {
-        Thread consumerThread;
-        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
-            new Thread(new Consumer(queue)).start();
-        }
-    }
-
-    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
-        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
-        CountDownLatch countDownLatch = new CountDownLatch(files.size());
-        MessageType type = MessageType.REGULAR;
-        for (Map.Entry<String, String> entry : files.entrySet()) {
-            if (entry.getValue().equals("JSONL")) {
-                executorService.execute(new JsonProducer(entry.getKey(), queue, type));
-                countDownLatch.countDown();
-            }
-            if (entry.getValue().equals("CSV")) {
-                executorService.execute(new CsvProducer(entry.getKey(), queue, type));
-                countDownLatch.countDown();
-            }
-            try {
-                countDownLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            type = MessageType.POISON_PILL;
+//    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
+//        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
+//        CountDownLatch countDownLatch = new CountDownLatch(files.size());
+//        MessageType type = MessageType.REGULAR;
+//        for (Map.Entry<String, String> entry : files.entrySet()) {
+//            if (entry.getValue().equals("JSONL")) {
+//                executorService.execute(new JsonProducer(entry.getKey(), queue, type));
+//                countDownLatch.countDown();
+//            }
+//            if (entry.getValue().equals("CSV")) {
+//                executorService.execute(new CsvProducer(entry.getKey(), queue, type));
+//                countDownLatch.countDown();
+//            }
+//            try {
+//                countDownLatch.await();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            type = MessageType.POISON_PILL;
 
 //            получение типа Producer в зависимости от расширения файла
 //            executorService.execute(new CsvProducer(entry.getKey(), queue, ProducerType.JSON));
@@ -83,16 +76,15 @@ public class OrdersParser {
 //            countDownLatch-- -> MessageType.REGULAR
 //            countDownLatch-- -> на последнем файле - MessageType.POISON_PILL
 
-        }
-    }
 
-    public static OrderIn testReader(String path, MessageType messageType) throws IOException {
+    public static void testReader(String path, MessageType messageType) throws IOException {
 
-        OrderIn str;
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-
+            CSVParser csvParser = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+            for (CSVRecord record : csvParser) {
+                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(path).getFileName().toString(), messageType.getMessageType());
+                System.out.println("jr");
+            }
         }
-        System.out.println("ok");
-        return str;
     }
 }

@@ -3,9 +3,12 @@ package ordersparser.producer;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.BlockingQueue;
 
 public class CsvProducer implements Runnable {
@@ -22,14 +25,15 @@ public class CsvProducer implements Runnable {
 
     @Override
     public void run() {
-//        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-//            Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(reader);
-//            for (CSVRecord record : records) {
-//                queue.put(new OrderIn(record.get(0),record.get(1),record.get(2),record.get(3),record.get(4)));
-//            }
-//        } catch (IOException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+            for (CSVRecord record : records) {
+                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(filePath).getFileName().toString(), type.getMessageType());
+                queue.put(message);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public MessageType getType() {
