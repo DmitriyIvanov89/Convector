@@ -5,13 +5,13 @@ public enum MessageType {
     REGULAR("REGULAR"),
     POISON_PILL("POISON_PILL");
 
-    private final String messageType;
+    private final MessageType messageType;
 
-    MessageType(String messageType) {
+    MessageType(MessageType messageType) {
         this.messageType = messageType;
     }
 
-    public String getMessageType() {
+    public MessageType getMessageType() {
         return messageType;
     }
 }

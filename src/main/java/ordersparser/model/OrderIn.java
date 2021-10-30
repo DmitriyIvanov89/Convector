@@ -8,12 +8,12 @@ public class OrderIn {
     private String comment;
     private String fileName;
     private String line;
-    private String messageType;
+    private MessageType messageType;
 
     public OrderIn() {
     }
 
-    public OrderIn(String orderId, String amount, String currency, String comment, String fileName, String messageType) {
+    public OrderIn(String orderId, String amount, String currency, String comment, String fileName, MessageType messageType) {
         this.orderId = orderId;
         this.amount = amount;
         this.currency = currency;
@@ -42,7 +42,7 @@ public class OrderIn {
         return fileName;
     }
 
-    public String getMessageType() {
+    public MessageType getMessageType() {
         return messageType;
     }
 
@@ -74,7 +74,7 @@ public class OrderIn {
         this.line = line;
     }
 
-    public void setMessageType(String messageType) {
+    public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
     }
 

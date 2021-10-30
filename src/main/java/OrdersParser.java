@@ -1,13 +1,15 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.google.gson.Gson;
+//import com.google.gson.JsonObject;
 import ordersparser.consumer.Consumer;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
-import ordersparser.validator.Validator;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,30 +21,34 @@ public class OrdersParser {
     private static final int MAX_CONSUMERS_COUNT = 3;
     private static final int MAX_PRODUCERS_COUNT = 2;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        if (args.length != 0) {
-            new Validator().validateArgs(args);
-        } else {
-            System.out.println("Incorrect args!");
-        }
-
+//        if (args.length != 0) {
+//            new Validator().validateArgs(args);
+//        } else {
+//            System.out.println("Incorrect args!");
+//        }
+//
 //        Map<String, String> files = getFiles(args);
 //        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
+        String path = ".\\src\\main\\resources\\orders.jsonl";
+        MessageType messageType = MessageType.REGULAR;
+        testReader(path, messageType);
+        System.out.println("end");
+
 
 //        runConsumers();
 //        runProducers();
     }
 
-//    public static Map<String, String> getFiles(String[] args) {
-//        Map<String, String> files = new HashMap<>();
-//        for (String path : args) {
-//            Path file = Paths.get(path);
-//            files.put(new File(path), file.getName().substring(file.getName().lastIndexOf(".") + 1).toUpperCase());
-//        }
-//
-//        return files;
-//    }
+    public static Map<String, String> getFiles(String[] args) {
+        Map<String, String> files = new HashMap<>();
+        for (String path : args) {
+            files.put(path, path.substring(path.lastIndexOf(".") + 1).toUpperCase());
+        }
+
+        return files;
+    }
 
     public static void runConsumers(BlockingQueue<OrderIn> queue) {
         Thread consumerThread;
@@ -51,32 +57,44 @@ public class OrdersParser {
         }
     }
 
-//    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
-//        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
-//        CountDownLatch countDownLatch = new CountDownLatch(files.size());
-//        MessageType type = MessageType.REGULAR;
-//        for (Map.Entry<String, String> entry : files.entrySet()) {
-//            if (entry.getValue().equals("JSONL")) {
-//                executorService.execute(new JsonProducer(entry.getKey(), queue, type));
-//                countDownLatch.countDown();
-//            }
-//            if (entry.getValue().equals("CSV")) {
-//                executorService.execute(new CsvProducer(entry.getKey(), queue, type));
-//                countDownLatch.countDown();
-//            }
-//            try {
-//                countDownLatch.await();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            type = MessageType.POISON_PILL;
-//
-////            получение типа Producer в зависимости от расширения файла
-////            executorService.execute(new CsvProducer(entry.getKey(), queue, ProducerType.JSON));
-////            executorService.execute(new JsonProducer(entry.getKey(), queue, ProducerType.CSV));
-////            countDownLatch-- -> MessageType.REGULAR
-////            countDownLatch-- -> на последнем файле - MessageType.POISON_PILL
-//
-//        }
-//    }
+    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
+        CountDownLatch countDownLatch = new CountDownLatch(files.size());
+        MessageType type = MessageType.REGULAR;
+        for (Map.Entry<String, String> entry : files.entrySet()) {
+            if (entry.getValue().equals("JSONL")) {
+                executorService.execute(new JsonProducer(entry.getKey(), queue, type));
+                countDownLatch.countDown();
+            }
+            if (entry.getValue().equals("CSV")) {
+                executorService.execute(new CsvProducer(entry.getKey(), queue, type));
+                countDownLatch.countDown();
+            }
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            type = MessageType.POISON_PILL;
+
+//            получение типа Producer в зависимости от расширения файла
+//            executorService.execute(new CsvProducer(entry.getKey(), queue, ProducerType.JSON));
+//            executorService.execute(new JsonProducer(entry.getKey(), queue, ProducerType.CSV));
+//            countDownLatch-- -> MessageType.REGULAR
+//            countDownLatch-- -> на последнем файле - MessageType.POISON_PILL
+
+        }
+    }
+
+    public static OrderIn testReader(String path, MessageType messageType) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        OrderIn str;
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+            str = objectMapper.readValue(reader, OrderIn.class);
+            str.setMessageType(messageType);
+            str.setFileName(Paths.get(path).getFileName());
+        }
+        System.out.println("ok");
+        return str;
+    }
 }

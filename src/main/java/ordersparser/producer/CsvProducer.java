@@ -10,12 +10,12 @@ import java.util.concurrent.BlockingQueue;
 
 public class CsvProducer implements Runnable {
 
-    private final File file;
+    private final String filePath;
     private final BlockingQueue<OrderIn> queue;
     private final MessageType type;
 
-    public CsvProducer(File file, BlockingQueue<OrderIn> queue, MessageType type) {
-        this.file = file;
+    public CsvProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type) {
+        this.filePath = filePath;
         this.queue = queue;
         this.type = type;
     }

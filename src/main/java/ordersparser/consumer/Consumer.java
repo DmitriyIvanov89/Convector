@@ -3,10 +3,7 @@ package ordersparser.consumer;
 import ordersparser.mapper.Mapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
-import ordersparser.model.OrderOut;
-import ordersparser.producer.ProducerType;
 
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 public class Consumer implements Runnable {
