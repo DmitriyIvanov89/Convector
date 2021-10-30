@@ -78,6 +78,7 @@ public class OrderOut {
                 && Objects.equals(line, orderOut.line)
                 && currency.equals(orderOut.currency)
                 && fileName.equals(orderOut.fileName)
+                && line.equals(orderOut.line)
                 && result.equals(orderOut.result);
 
     }
@@ -91,17 +92,13 @@ public class OrderOut {
         result1 = prime * result1 + (line == null ? 0 : line.hashCode());
         result1 = prime * result1 + (currency == null ? 0 : currency.hashCode());
         result1 = prime * result1 + (fileName == null ? 0 : fileName.hashCode());
+        result1 = prime * result1 + (line == null ? 0 : line.hashCode());
         result1 = prime * result1 + (result == null ? 0 : result.hashCode());
         return result1;
     }
 
     @Override
     public String toString() {
-        return "{id: " + id + ", " +
-                "amount: " + amount + ", " +
-                "comment: " + comment + ", " +
-                "filename: " + fileName + ", " +
-                "line: " + line + ", " +
-                "result: " + result + " }";
+        return String.format("{id: %d, amount: %f, comment: %s, filename: %s,line: %d,result: %s", id, amount, comment, fileName, line, result);
     }
 }

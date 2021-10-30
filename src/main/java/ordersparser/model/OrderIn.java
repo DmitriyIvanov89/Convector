@@ -74,7 +74,9 @@ public class OrderIn {
         return orderId.equals(orderIn.orderId)
                 && amount.equals(orderIn.amount)
                 && currency.equals(orderIn.currency)
-                && comment.equals(orderIn.comment);
+                && comment.equals(orderIn.comment)
+                && fileName.equals(orderIn.fileName)
+                && messageType.equals(orderIn.messageType);
     }
 
     @Override
@@ -85,15 +87,13 @@ public class OrderIn {
         result = prime * result + (amount == null ? 0 : amount.hashCode());
         result = prime * result + (currency == null ? 0 : currency.hashCode());
         result = prime * result + (comment == null ? 0 : comment.hashCode());
+        result = prime * result + (fileName == null ? 0 : fileName.hashCode());
+        result = prime * result + (messageType == null ? 0 : messageType.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "OrderIn: {" + "orderId = " + orderId +
-                "amount = " + amount +
-                "currency = " + currency +
-                "comment = " + comment +
-                "}";
+        return String.format("MessageIn: { orderId = %s, amount = %s, currency = %s, comment = %s, filename = %s, messageType = %s }", orderId, amount, currency, comment, fileName, messageType);
     }
 }
