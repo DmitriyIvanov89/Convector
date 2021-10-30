@@ -2,25 +2,28 @@ package ordersparser.validator;
 
 import ordersparser.producer.ProducerType;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class Validator {
 
-    public boolean validate(String[] args) {
+    public boolean validateArgs(String[] args) {
         for (String path : args) {
-            File file = new File(path);
-            String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1).toUpperCase();
-            if (!file.exists()) {
-                System.out.println("File: " + file.getName() + " not found");
+            Path filePath = Paths.get(path);
+            String fileExtension = path.substring(path.lastIndexOf(".") + 1).toUpperCase();
+            if (!Files.exists(filePath)) {
+                System.out.printf("File: %s not found.", filePath.getFileName());
                 return false;
             }
             if (!fileExtension.equals(ProducerType.CSV.getType()) && !fileExtension.equals(ProducerType.JSONL.getType())) {
-                System.out.println("Unknown file extension: " + fileExtension + " " + path);
+                System.out.printf("Unknown file extension: %s", fileExtension);
                 return false;
             }
         }
 
         return true;
     }
+
 }
