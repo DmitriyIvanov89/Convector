@@ -99,6 +99,14 @@ public class OrderOut {
 
     @Override
     public String toString() {
-        return String.format("{id: %d, amount: %f, comment: %s, filename: %s,line: %d,result: %s", id, amount, comment, fileName, line, result);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("OrderOut: {");
+        stringBuilder.append("id: ").append(id);
+        stringBuilder.append(", amount: ").append(amount);
+        stringBuilder.append(", comment: ").append(comment);
+        stringBuilder.append(", filename: ").append(fileName);
+        stringBuilder.append(", line: ").append(line);
+        stringBuilder.append(", result: ").append(result);
+        return stringBuilder.toString();
     }
 }

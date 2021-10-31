@@ -8,14 +8,28 @@ public class OrderIn {
     private String comment;
     private String fileName;
     private String messageType;
+    private String line;
 
-    public OrderIn(String orderId, String amount, String currency, String comment, String fileName, String messageType) {
+    // для чтения Jackson
+    public OrderIn() {
+    }
+
+    public OrderIn(String orderId, String amount, String currency, String comment, String fileName, String messageType, String line) {
         this.orderId = orderId;
         this.amount = amount;
         this.currency = currency;
         this.comment = comment;
         this.fileName = fileName;
         this.messageType = messageType;
+        this.line = line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
+
+    public String getLine() {
+        return line;
     }
 
     public String getOrderId() {

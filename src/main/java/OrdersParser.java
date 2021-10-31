@@ -1,12 +1,22 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.bcel.internal.classfile.LineNumber;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import ordersparser.consumer.Consumer;
+import ordersparser.mapper.Mapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.validator.Validator;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -19,7 +29,21 @@ public class OrdersParser {
 
     public static void main(String[] args) throws IOException {
 
+//        OrderIn message = new OrderIn("1", "100", "USD", "order", "orders.jsonl", "REGULAR");
+//        OrderIn message2 = new OrderIn("3", "150", "EUR", "order", "orders.jsonl", "REGULAR");
+//        OrderIn message1 = new OrderIn("2", "200", "EUR", "order", "orders.csv", "REGULAR");
+//        Mapper mapper = new Mapper();
+//        List<OrderIn> messages = new ArrayList<>();
+//        messages.add(message);
+//        messages.add(message1);
+//        messages.add(message2);
+//        for (OrderIn mes : messages) {
+//            System.out.println(mapper.convertInToOut(mes));
+//        }
 
+        String path = ".\\src\\main\\resources\\orders.jsonl";
+        test(path, MessageType.REGULAR);
+        System.out.println("end");
 
 //        if (args.length != 0) {
 //            new Validator().validateArgs(args);
@@ -34,6 +58,24 @@ public class OrdersParser {
 //        runProducers();
     }
 
+    public static List<OrderIn> test(String path, MessageType type) throws IOException {
+        List<OrderIn> messages = new ArrayList<OrderIn>();
+        OrderIn message;
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+            ObjectMapper objectMapper = new ObjectMapper();
+//            String line = reader.readLine();
+//            message = objectMapper.readValue(reader, OrderIn.class);
+//            message.setFileName(Paths.get(path).getFileName().toString());
+//            message.setMessageType(type.getMessageType());
+//            message.setLine(line);
+//            messages.add(message);
+            message = objectMapper.readValue(reader, OrderIn.class);
+            message.setFileName(Paths.get(path).getFileName().toString());
+            message.setMessageType(type.getMessageType());
+            System.out.println("end method");
+        }
+        return messages;
+    }
 
 
 //    public static Map<String, String> getFiles(String[] args) {
