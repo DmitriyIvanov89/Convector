@@ -3,28 +3,24 @@ package ordersparser.mapper;
 import ordersparser.model.OrderIn;
 import ordersparser.model.OrderOut;
 
-import java.math.BigDecimal;
 
 public class Mapper {
 
-    private OrderIn orderIn;
-
-    public OrderOut convertInToOut(OrderIn orderIn) {
-        OrderOut orderOut = new OrderOut();
-        if (orderIn != null) {
-            orderOut.setId(Integer.parseInt(orderIn.getOrderId()));
-            orderOut.setAmount(Float.parseFloat(orderIn.getAmount()));
-            orderOut.setCurrency(orderIn.getCurrency());
-            orderOut.setComment(orderIn.getComment());
-            orderOut.setFileName(orderIn.getFileName());
+    public OrderOut convertInToOut(OrderIn message) {
+        OrderOut messageOut = new OrderOut();
+        if (message != null) {
+            messageOut.setId(Integer.parseInt(message.getOrderId()));
+            messageOut.setAmount(Float.parseFloat(message.getAmount()));
+            messageOut.setCurrency(message.getCurrency());
+            messageOut.setComment(message.getComment());
+            messageOut.setFileName(message.getFileName());
 //            orderOut.setLine(Integer.parseInt(orderIn.getLine()));
-            // вывод результата конвектирования(есть ли ошибки)
-            orderOut.setResult("OK");
+            messageOut.setResult("OK");
         } else {
-            orderOut.setResult("Wrong message");
+            messageOut.setResult("Wrong message");
         }
 
-        return orderOut;
+        return messageOut;
     }
 
     public String buildErrorMessage() {
