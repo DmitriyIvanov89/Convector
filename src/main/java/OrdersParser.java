@@ -8,6 +8,9 @@ import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.validator.Validator;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -80,20 +83,19 @@ public class OrdersParser {
 
     public static List<OrderIn> test2(String path, MessageType type) throws IOException {
         List<OrderIn> list = new ArrayList<>();
-        OrderIn message;
         String line;
         int currLine = 0;
-        ObjectMapper objectMapper = new ObjectMapper();
         BufferedReader reader = Files.newBufferedReader(Paths.get(path));
-        while ((line = reader.readLine()) != null) {
-            currLine++;
-            message = objectMapper.readValue(line, OrderIn.class);
-            message.setFileName(Paths.get(path).getFileName().toString());
-            message.setMessageType(type.getMessageType());
-            message.setLine(String.valueOf(currLine));
-            list.add(message);
+        CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+//        while ((line = reader.readLine()) != null) {
+            for (CSVRecord record : records) {
+                System.out.println(record);
+                currLine++;
+                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(path).getFileName().toString(), type.getMessageType(), record.get(String.valueOf(currLine)));
+                list.add(message);
+//            }
+
         }
-        reader.close();
         return list;
     }
 
