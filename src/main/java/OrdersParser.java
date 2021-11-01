@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class OrdersParser {
 //            System.out.println(mapper.convertInToOut(mes));
 //        }
 
-        String path = ".\\src\\main\\resources\\orders.jsonl";
+        String path = ".\\src\\main\\resources\\orders.csv";
 //        test(path, MessageType.REGULAR);
         List<OrderIn> list = test2(path, MessageType.REGULAR);
         System.out.println(list.size());
@@ -63,38 +64,17 @@ public class OrdersParser {
 //        runProducers();
     }
 
-//    public static List<OrderIn> test(String path, MessageType type) throws IOException {
-//        List<OrderIn> messages = new ArrayList<>();
-//        OrderIn message;
-//        String line;
-//        int currLine = 0;
-//        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-//                ObjectMapper objectMapper = new ObjectMapper();
-//                message = objectMapper.readValue(reader, OrderIn.class);
-//                message.setFileName(Paths.get(path).getFileName().toString());
-//                currLine++;
-//                message.setMessageType(type.getMessageType());
-//                message.setLine(String.valueOf(currLine));
-//                messages.add(message);
-//                System.out.println("end method");
-//            }
-//            return messages;
-//        }
 
     public static List<OrderIn> test2(String path, MessageType type) throws IOException {
         List<OrderIn> list = new ArrayList<>();
-        String line;
-        int currLine = 0;
-        BufferedReader reader = Files.newBufferedReader(Paths.get(path));
-        CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
-//        while ((line = reader.readLine()) != null) {
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+            int currLine = 0;
             for (CSVRecord record : records) {
-                System.out.println(record);
                 currLine++;
-                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(path).getFileName().toString(), type.getMessageType(), record.get(String.valueOf(currLine)));
+                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(path).getFileName().toString(), type.getMessageType(), String.valueOf(currLine));
                 list.add(message);
-//            }
-
+            }
         }
         return list;
     }
