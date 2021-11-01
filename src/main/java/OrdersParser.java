@@ -42,7 +42,9 @@ public class OrdersParser {
 //        }
 
         String path = ".\\src\\main\\resources\\orders.jsonl";
-        test(path, MessageType.REGULAR);
+//        test(path, MessageType.REGULAR);
+        List<OrderIn> list = test2(path, MessageType.REGULAR);
+        System.out.println(list.size());
         System.out.println("end");
 
 //        if (args.length != 0) {
@@ -58,25 +60,42 @@ public class OrdersParser {
 //        runProducers();
     }
 
-    public static List<OrderIn> test(String path, MessageType type) throws IOException {
-        List<OrderIn> messages = new ArrayList<OrderIn>();
+//    public static List<OrderIn> test(String path, MessageType type) throws IOException {
+//        List<OrderIn> messages = new ArrayList<>();
+//        OrderIn message;
+//        String line;
+//        int currLine = 0;
+//        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                message = objectMapper.readValue(reader, OrderIn.class);
+//                message.setFileName(Paths.get(path).getFileName().toString());
+//                currLine++;
+//                message.setMessageType(type.getMessageType());
+//                message.setLine(String.valueOf(currLine));
+//                messages.add(message);
+//                System.out.println("end method");
+//            }
+//            return messages;
+//        }
+
+    public static List<OrderIn> test2(String path, MessageType type) throws IOException {
+        List<OrderIn> list = new ArrayList<>();
         OrderIn message;
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-            ObjectMapper objectMapper = new ObjectMapper();
-//            String line = reader.readLine();
-//            message = objectMapper.readValue(reader, OrderIn.class);
-//            message.setFileName(Paths.get(path).getFileName().toString());
-//            message.setMessageType(type.getMessageType());
-//            message.setLine(line);
-//            messages.add(message);
-            message = objectMapper.readValue(reader, OrderIn.class);
+        String line;
+        int currLine = 0;
+        ObjectMapper objectMapper = new ObjectMapper();
+        BufferedReader reader = Files.newBufferedReader(Paths.get(path));
+        while ((line = reader.readLine()) != null) {
+            currLine++;
+            message = objectMapper.readValue(line, OrderIn.class);
             message.setFileName(Paths.get(path).getFileName().toString());
             message.setMessageType(type.getMessageType());
-            System.out.println("end method");
+            message.setLine(String.valueOf(currLine));
+            list.add(message);
         }
-        return messages;
+        reader.close();
+        return list;
     }
-
 
 //    public static Map<String, String> getFiles(String[] args) {
 //        Map<String, String> files = new HashMap<>();
