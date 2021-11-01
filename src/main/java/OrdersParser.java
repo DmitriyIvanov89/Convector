@@ -63,12 +63,6 @@ public class OrdersParser {
         OrderIn message;
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
             ObjectMapper objectMapper = new ObjectMapper();
-//            String line = reader.readLine();
-//            message = objectMapper.readValue(reader, OrderIn.class);
-//            message.setFileName(Paths.get(path).getFileName().toString());
-//            message.setMessageType(type.getMessageType());
-//            message.setLine(line);
-//            messages.add(message);
             message = objectMapper.readValue(reader, OrderIn.class);
             message.setFileName(Paths.get(path).getFileName().toString());
             message.setMessageType(type.getMessageType());
