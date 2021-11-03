@@ -27,8 +27,7 @@ public class JsonProducer implements Runnable {
     public void run() {
         String line;
         int currLine = 0;
-        try {
-            BufferedReader reader = Files.newBufferedReader(Paths.get(filePath));
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
             while ((line = reader.readLine()) != null) {
                 currLine++;
                 OrderIn message = objectMapper.readValue(line, OrderIn.class);
@@ -36,7 +35,6 @@ public class JsonProducer implements Runnable {
                 message.setMessageType(type.getMessageType());
                 message.setLine(String.valueOf(currLine));
                 queue.put(message);
-                // reader.close();
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
