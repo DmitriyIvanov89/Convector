@@ -42,7 +42,7 @@ public class OrdersParser {
 //        }
 
         String path = ".\\src\\main\\resources\\orders.jsonl";
-        test(path, MessageType.REGULAR);
+//        test(path, MessageType.REGULAR);
         System.out.println("end");
 
 //        if (args.length != 0) {
@@ -58,18 +58,20 @@ public class OrdersParser {
 //        runProducers();
     }
 
-    public static List<OrderIn> test(String path, MessageType type) throws IOException {
-        List<OrderIn> messages = new ArrayList<OrderIn>();
-        OrderIn message;
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            message = objectMapper.readValue(reader, OrderIn.class);
-            message.setFileName(Paths.get(path).getFileName().toString());
-            message.setMessageType(type.getMessageType());
-            System.out.println("end method");
-        }
-        return messages;
-    }
+//    public static List<OrderIn> test(String path, MessageType type) throws IOException {
+//        List<OrderIn> messages = new ArrayList<OrderIn>();
+//        OrderIn message;
+//        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            message = objectMapper.readValue(reader, OrderIn.class);
+//            message.setFileName(Paths.get(path).getFileName().toString());
+//            message.setMessageType(type.getMessageType());
+//            System.out.println("end method");
+//        }
+//        return messages;
+//    }
+
+
 
 
 //    public static Map<String, String> getFiles(String[] args) {
