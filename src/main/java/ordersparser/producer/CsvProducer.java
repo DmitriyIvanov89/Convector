@@ -25,15 +25,18 @@ public class CsvProducer implements Runnable {
 
     @Override
     public void run() {
-//        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
-//            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
-//            for (CSVRecord record : records) {
-//                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(filePath).getFileName().toString(), type.getMessageType());
-//                queue.put(message);
-//            }
-//        } catch (IOException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
+
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+            int currLine = 0;
+            for (CSVRecord record : records) {
+                currLine++;
+                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(filePath).getFileName().toString(), type.getMessageType(), String.valueOf(currLine));
+                queue.put(message);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public MessageType getType() {

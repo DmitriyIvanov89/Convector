@@ -25,11 +25,19 @@ public class JsonProducer implements Runnable {
 
     @Override
     public void run() {
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
-            OrderIn message = objectMapper.readValue(reader, OrderIn.class);
-            message.setFileName(Paths.get(filePath).getFileName().toString());
-            message.setMessageType(type.getMessageType());
-            queue.put(message);
+        String line;
+        int currLine = 0;
+        try {
+            BufferedReader reader = Files.newBufferedReader(Paths.get(filePath));
+            while ((line = reader.readLine()) != null) {
+                currLine++;
+                OrderIn message = objectMapper.readValue(line, OrderIn.class);
+                message.setFileName(Paths.get(filePath).getFileName().toString());
+                message.setMessageType(type.getMessageType());
+                message.setLine(String.valueOf(currLine));
+                queue.put(message);
+                // reader.close();
+            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

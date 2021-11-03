@@ -8,11 +8,15 @@ import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.validator.Validator;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,20 +33,11 @@ public class OrdersParser {
 
     public static void main(String[] args) throws IOException {
 
-//        OrderIn message = new OrderIn("1", "100", "USD", "order", "orders.jsonl", "REGULAR");
-//        OrderIn message2 = new OrderIn("3", "150", "EUR", "order", "orders.jsonl", "REGULAR");
-//        OrderIn message1 = new OrderIn("2", "200", "EUR", "order", "orders.csv", "REGULAR");
-//        Mapper mapper = new Mapper();
-//        List<OrderIn> messages = new ArrayList<>();
-//        messages.add(message);
-//        messages.add(message1);
-//        messages.add(message2);
-//        for (OrderIn mes : messages) {
-//            System.out.println(mapper.convertInToOut(mes));
-//        }
 
-        String path = ".\\src\\main\\resources\\orders.jsonl";
+        String path = ".\\src\\main\\resources\\orders.csv";
 //        test(path, MessageType.REGULAR);
+        List<OrderIn> list = test2(path, MessageType.REGULAR);
+        System.out.println(list.size());
         System.out.println("end");
 
 //        if (args.length != 0) {
@@ -71,9 +66,20 @@ public class OrdersParser {
 //        return messages;
 //    }
 
-
-
-
+    public static List<OrderIn> test2(String path, MessageType type) throws IOException {
+        List<OrderIn> list = new ArrayList<>();
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+            int currLine = 0;
+            for (CSVRecord record : records) {
+                currLine++;
+                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(path).getFileName().toString(), type.getMessageType(), String.valueOf(currLine));
+                list.add(message);
+            }
+        }
+        return list;
+    }
+    
 //    public static Map<String, String> getFiles(String[] args) {
 //        Map<String, String> files = new HashMap<>();
 //        for (String path : args) {
