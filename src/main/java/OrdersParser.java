@@ -15,10 +15,10 @@ import java.util.concurrent.*;
 public class OrdersParser {
 
     private static final int QUEUE_CAPACITY = 10;
-    private static final int MAX_CONSUMERS_COUNT = 3;
+    private static final int MAX_CONSUMERS_COUNT = 2;
     private static final int MAX_PRODUCERS_COUNT = 3;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         if (args.length != 0) {
             new Validator().validateArgs(args);
@@ -28,7 +28,6 @@ public class OrdersParser {
 
         Map<String, String> files = getFiles(args);
         BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-
         runProducers(files, queue);
         runConsumers(queue);
     }
@@ -50,7 +49,7 @@ public class OrdersParser {
         }
     }
 
-    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
+    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(files.size());
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         MessageType type = MessageType.REGULAR;
@@ -64,12 +63,8 @@ public class OrdersParser {
                 countDownLatch.countDown();
             }
         }
-        try {
-            countDownLatch.await();
-            type = MessageType.POISON_PILL;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        countDownLatch.await();
+        type = MessageType.POISON_PILL;
     }
 
 }
