@@ -16,7 +16,7 @@ public class OrdersParser {
 
     private static final int QUEUE_CAPACITY = 10;
     private static final int MAX_CONSUMERS_COUNT = 3;
-    private static final int MAX_PRODUCERS_COUNT = 2;
+    private static final int MAX_PRODUCERS_COUNT = 3;
 
     public static void main(String[] args) throws IOException {
 
@@ -31,8 +31,6 @@ public class OrdersParser {
 
         runProducers(files, queue);
         runConsumers(queue);
-
-        System.out.println("test");
     }
 
 
@@ -58,13 +56,17 @@ public class OrdersParser {
         MessageType type = MessageType.REGULAR;
         for (Map.Entry<String, String> entry : files.entrySet()) {
             if (entry.getValue().equals("JSONL")) {
-                executorService.execute(new JsonProducer(entry.getKey(), queue, type));
-                countDownLatch.countDown();
+                executorService.execute(new JsonProducer(entry.getKey(), queue, type, countDownLatch));
             }
             if (entry.getValue().equals("CSV")) {
-                executorService.execute(new CsvProducer(entry.getKey(), queue, type));
-                countDownLatch.countDown();
+                executorService.execute(new CsvProducer(entry.getKey(), queue, type, countDownLatch));
             }
+        }
+        try {
+            type = MessageType.POISON_PILL;
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
