@@ -66,10 +66,10 @@ public class OrdersParser {
         }
         try {
             countDownLatch.await();
+            type = MessageType.POISON_PILL;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        type = MessageType.POISON_PILL;
     }
 
 }

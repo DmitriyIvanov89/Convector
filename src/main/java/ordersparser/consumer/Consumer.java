@@ -10,7 +10,6 @@ import java.util.concurrent.BlockingQueue;
 public class Consumer implements Runnable {
 
     private final BlockingQueue<OrderIn> queue;
-    private Mapper mapper;
 
     public Consumer(BlockingQueue<OrderIn> queue) {
         this.queue = queue;
