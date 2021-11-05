@@ -1,5 +1,6 @@
 package ordersparser.consumer;
 
+import ordersparser.consoleprint.ConsolePrint;
 import ordersparser.mapper.Mapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
@@ -20,7 +21,7 @@ public class Consumer implements Runnable {
 
         try {
             while (!queue.take().getMessageType().equals(MessageType.POISON_PILL.getMessageType())) {
-                 new Mapper().convertInToOut(queue.take());
+                new ConsolePrint().printResult(new Mapper().convertInToOut(queue.take()));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

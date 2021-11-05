@@ -1,26 +1,13 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.bcel.internal.classfile.LineNumber;
-import com.sun.org.apache.xpath.internal.operations.Or;
+
 import ordersparser.consumer.Consumer;
-import ordersparser.mapper.Mapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.validator.Validator;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -42,8 +29,10 @@ public class OrdersParser {
         Map<String, String> files = getFiles(args);
         BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 
-//        runConsumers();
-//        runProducers();
+        runProducers(files, queue);
+        runConsumers(queue);
+
+        System.out.println("test");
     }
 
 
@@ -83,10 +72,6 @@ public class OrdersParser {
             }
             type = MessageType.POISON_PILL;
         }
-//            получение типа Producer в зависимости от расширения файла
-//            executorService.execute(new CsvProducer(entry.getKey(), queue, ProducerType.JSON));
-//            executorService.execute(new JsonProducer(entry.getKey(), queue, ProducerType.CSV));
-//            countDownLatch-- -> MessageType.REGULAR
-//            countDownLatch-- -> на последнем файле - MessageType.POISON_PILL
     }
+
 }
