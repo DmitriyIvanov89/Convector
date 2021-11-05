@@ -51,8 +51,8 @@ public class OrdersParser {
     }
 
     public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
-        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         CountDownLatch countDownLatch = new CountDownLatch(files.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         MessageType type = MessageType.REGULAR;
         for (Map.Entry<String, String> entry : files.entrySet()) {
             if (entry.getValue().equals("JSONL")) {
@@ -64,9 +64,12 @@ public class OrdersParser {
                 countDownLatch.countDown();
             }
         }
-        if (countDownLatch.getCount() == 1) {
-            type = MessageType.POISON_PILL;
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        type = MessageType.POISON_PILL;
     }
 
 }

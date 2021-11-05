@@ -17,6 +17,7 @@ public class ConsolePrint {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return parseResult;
     }
 }
