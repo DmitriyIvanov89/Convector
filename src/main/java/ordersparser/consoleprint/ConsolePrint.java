@@ -13,6 +13,7 @@ public class ConsolePrint {
 
         try {
             parseResult = mapper.writeValueAsString(messageOut);
+            System.out.println(parseResult);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

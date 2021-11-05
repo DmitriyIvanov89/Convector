@@ -65,12 +65,6 @@ public class OrdersParser {
                 executorService.execute(new CsvProducer(entry.getKey(), queue, type));
                 countDownLatch.countDown();
             }
-            try {
-                countDownLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            type = MessageType.POISON_PILL;
         }
     }
 
