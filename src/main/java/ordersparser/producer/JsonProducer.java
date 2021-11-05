@@ -8,7 +8,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
 
 public class JsonProducer implements Runnable {
 
@@ -16,14 +15,12 @@ public class JsonProducer implements Runnable {
     private final BlockingQueue<OrderIn> queue;
     private final MessageType type;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final CountDownLatch count;
 
 
-    public JsonProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type, CountDownLatch count) {
+    public JsonProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type) {
         this.filePath = filePath;
         this.queue = queue;
         this.type = type;
-        this.count = count;
     }
 
     @Override
@@ -39,7 +36,6 @@ public class JsonProducer implements Runnable {
                 message.setMessageType(type.getMessageType());
                 message.setLine(String.valueOf(currLine));
                 queue.put(message);
-                count.countDown();
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

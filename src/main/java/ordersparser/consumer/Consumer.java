@@ -20,7 +20,7 @@ public class Consumer implements Runnable {
     public void run() {
 
         try {
-            while (!queue.take().getMessageType().equals(MessageType.POISON_PILL.getMessageType())) {
+            while (!(queue.take().getMessageType().equals(MessageType.POISON_PILL.getMessageType()))) {
                 new ConsolePrint().printResult(new Mapper().convertInToOut(queue.take()));
             }
         } catch (InterruptedException e) {

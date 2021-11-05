@@ -17,13 +17,11 @@ public class CsvProducer implements Runnable {
     private final String filePath;
     private final BlockingQueue<OrderIn> queue;
     private final MessageType type;
-    private final CountDownLatch count;
 
-    public CsvProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type, CountDownLatch count) {
+    public CsvProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type) {
         this.filePath = filePath;
         this.queue = queue;
         this.type = type;
-        this.count = count;
     }
 
     @Override
@@ -36,7 +34,6 @@ public class CsvProducer implements Runnable {
                 currLine++;
                 OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(filePath).getFileName().toString(), type.getMessageType(), String.valueOf(currLine));
                 queue.put(message);
-                count.countDown();
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

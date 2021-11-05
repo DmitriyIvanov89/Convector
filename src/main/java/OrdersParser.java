@@ -56,17 +56,16 @@ public class OrdersParser {
         MessageType type = MessageType.REGULAR;
         for (Map.Entry<String, String> entry : files.entrySet()) {
             if (entry.getValue().equals("JSONL")) {
-                executorService.execute(new JsonProducer(entry.getKey(), queue, type, countDownLatch));
+                executorService.execute(new JsonProducer(entry.getKey(), queue, type));
+                countDownLatch.countDown();
             }
             if (entry.getValue().equals("CSV")) {
-                executorService.execute(new CsvProducer(entry.getKey(), queue, type, countDownLatch));
+                executorService.execute(new CsvProducer(entry.getKey(), queue, type));
+                countDownLatch.countDown();
             }
         }
-        try {
+        if (countDownLatch.getCount() == 1) {
             type = MessageType.POISON_PILL;
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
