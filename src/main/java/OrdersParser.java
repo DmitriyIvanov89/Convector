@@ -25,7 +25,7 @@ public class OrdersParser {
         } else {
             System.out.println("Incorrect args!");
         }
-        
+
         Map<String, String> files = getFiles(args);
         BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
         runProducers(files, queue);
@@ -42,7 +42,6 @@ public class OrdersParser {
     }
 
     public static void runConsumers(BlockingQueue<OrderIn> queue) {
-        Thread consumerThread;
         for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
             new Thread(new Consumer(queue)).start();
         }
@@ -61,9 +60,15 @@ public class OrdersParser {
                 executorService.execute(new CsvProducer(entry.getKey(), queue, type));
                 countDownLatch.countDown();
             }
+            if (files.size() == 1) {
+                type = MessageType.POISON_PILL;
+            }
         }
-        countDownLatch.await();
-        type = MessageType.POISON_PILL;
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
