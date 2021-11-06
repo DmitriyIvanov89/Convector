@@ -90,7 +90,8 @@ public class OrderIn {
                 && currency.equals(orderIn.currency)
                 && comment.equals(orderIn.comment)
                 && fileName.equals(orderIn.fileName)
-                && messageType.equals(orderIn.messageType);
+                && messageType.equals(orderIn.messageType)
+                && line.equals(orderIn.line);
     }
 
     @Override
@@ -103,11 +104,12 @@ public class OrderIn {
         result = prime * result + (comment == null ? 0 : comment.hashCode());
         result = prime * result + (fileName == null ? 0 : fileName.hashCode());
         result = prime * result + (messageType == null ? 0 : messageType.hashCode());
+        result = prime * result + (line == null ? 0 : line.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("MessageIn: { orderId = %s, amount = %s, currency = %s, comment = %s, filename = %s, messageType = %s }", orderId, amount, currency, comment, fileName, messageType);
+        return String.format("MessageIn: { orderId = %s, amount = %s, currency = %s, comment = %s, filename = %s, messageType = %s, line = &s }", orderId, amount, currency, comment, fileName, messageType, line);
     }
 }

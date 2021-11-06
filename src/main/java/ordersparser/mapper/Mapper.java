@@ -14,7 +14,7 @@ public class Mapper {
             messageOut.setCurrency(message.getCurrency());
             messageOut.setComment(message.getComment());
             messageOut.setFileName(message.getFileName());
-//            orderOut.setLine(Integer.parseInt(orderIn.getLine()));
+            messageOut.setLine(Integer.parseInt(message.getLine()));
             messageOut.setResult("OK");
         } else {
             messageOut.setResult("Wrong message");
@@ -23,7 +23,7 @@ public class Mapper {
         return messageOut;
     }
 
-    public String buildErrorMessage() {
+    public String buildErrorMessage(OrderIn message) {
         return null;
     }
 
