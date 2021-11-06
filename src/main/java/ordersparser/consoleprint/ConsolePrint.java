@@ -6,18 +6,14 @@ import ordersparser.model.OrderOut;
 
 public class ConsolePrint {
 
-    ObjectMapper mapper = new ObjectMapper();
-
-    public String printResult(OrderOut messageOut) {
-        String parseResult = null;
+    public void printResult(OrderOut messageOut) {
 
         try {
-            parseResult = mapper.writeValueAsString(messageOut);
+            ObjectMapper mapper = new ObjectMapper();
+            String parseResult = mapper.writeValueAsString(messageOut);
             System.out.println(parseResult);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-        return parseResult;
     }
 }

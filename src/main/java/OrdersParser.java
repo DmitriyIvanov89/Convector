@@ -28,6 +28,7 @@ public class OrdersParser {
 
         Map<String, String> files = getFiles(args);
         BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
+
         runProducers(files, queue);
         runConsumers(queue);
     }
@@ -47,7 +48,7 @@ public class OrdersParser {
         }
     }
 
-    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) throws InterruptedException {
+    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
         CountDownLatch countDownLatch = new CountDownLatch(files.size());
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         MessageType type = MessageType.REGULAR;

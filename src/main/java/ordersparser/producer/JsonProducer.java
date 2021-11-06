@@ -14,8 +14,6 @@ public class JsonProducer implements Runnable {
     private final String filePath;
     private final BlockingQueue<OrderIn> queue;
     private final MessageType type;
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
 
     public JsonProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type) {
         this.filePath = filePath;
@@ -28,6 +26,7 @@ public class JsonProducer implements Runnable {
         String line;
         int currLine = 0;
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            ObjectMapper objectMapper = new ObjectMapper();
             while ((line = reader.readLine()) != null) {
                 currLine++;
                 OrderIn message = objectMapper.readValue(line, OrderIn.class);
