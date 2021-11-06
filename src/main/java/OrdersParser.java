@@ -45,7 +45,7 @@ public class OrdersParser {
 //            System.out.println(mapper.convertInToOut(mes));
 //        }
 
-        String path = ".\\src\\main\\resources\\orders.csv";
+        String path = ".\\src\\main\\resources\\orders.jsonl";
 //        test(path, MessageType.REGULAR);
         List<OrderIn> list = test2(path, MessageType.REGULAR);
         System.out.println(list.size());
@@ -67,12 +67,15 @@ public class OrdersParser {
 
     public static List<OrderIn> test2(String path, MessageType type) throws IOException {
         List<OrderIn> list = new ArrayList<>();
+        int currLine = 0;
+        ObjectMapper mapper = new ObjectMapper();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
-            int currLine = 0;
-            for (CSVRecord record : records) {
+            while (reader.readLine() != null) {
                 currLine++;
-                OrderIn message = new OrderIn(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(path).getFileName().toString(), type.getMessageType(), String.valueOf(currLine));
+                OrderIn message = mapper.readValue(reader.readLine(), OrderIn.class);
+                message.setFileName(Paths.get(path).getFileName().toString());
+                message.setMessageType(type.getMessageType());
+                message.setLine(String.valueOf(currLine));
                 list.add(message);
             }
         }
