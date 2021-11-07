@@ -23,6 +23,7 @@ public class JsonProducer implements Runnable {
 
     @Override
     public void run() {
+
         String line;
         int currLine = 0;
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {

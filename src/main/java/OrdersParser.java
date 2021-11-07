@@ -1,4 +1,5 @@
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ordersparser.consumer.Consumer;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
@@ -6,7 +7,10 @@ import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.validator.Validator;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -16,9 +20,9 @@ public class OrdersParser {
 
     private static final int QUEUE_CAPACITY = 10;
     private static final int MAX_CONSUMERS_COUNT = 2;
-    private static final int MAX_PRODUCERS_COUNT = 3;
+    private static final int MAX_PRODUCERS_COUNT = 5;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
 
         if (args.length != 0) {
             new Validator().validateArgs(args);
@@ -31,6 +35,7 @@ public class OrdersParser {
 
         runProducers(files, queue);
         runConsumers(queue);
+
     }
 
     public static Map<String, String> getFiles(String[] args) {
@@ -71,5 +76,4 @@ public class OrdersParser {
             e.printStackTrace();
         }
     }
-
 }
