@@ -14,6 +14,10 @@ public class OrderIn {
     public OrderIn() {
     }
 
+    public OrderIn(String messageType) {
+        this.messageType = messageType;
+    }
+
     public OrderIn(String orderId, String amount, String currency, String comment, String fileName, String messageType, String line) {
         this.orderId = orderId;
         this.amount = amount;
