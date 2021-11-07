@@ -1,5 +1,4 @@
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import ordersparser.consumer.Consumer;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
@@ -7,10 +6,6 @@ import ordersparser.producer.CsvProducer;
 import ordersparser.producer.JsonProducer;
 import ordersparser.validator.Validator;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -54,8 +49,8 @@ public class OrdersParser {
     }
 
     public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) {
-        CountDownLatch countDownLatch = new CountDownLatch(files.size());
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
+        CountDownLatch countDownLatch = new CountDownLatch(files.size());
         MessageType type = MessageType.REGULAR;
         for (Map.Entry<String, String> entry : files.entrySet()) {
             if (entry.getValue().equals("JSONL")) {
@@ -66,14 +61,6 @@ public class OrdersParser {
                 executorService.execute(new CsvProducer(entry.getKey(), queue, type));
                 countDownLatch.countDown();
             }
-            if (files.size() == 1) {
-                type = MessageType.POISON_PILL;
-            }
-        }
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }

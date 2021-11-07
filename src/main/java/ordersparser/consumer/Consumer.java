@@ -19,8 +19,11 @@ public class Consumer implements Runnable {
     public void run() {
 
         try {
-            while (!(queue.take().getMessageType().equals(MessageType.POISON_PILL.getMessageType()))) {
+            while (true) {
                 new ConsolePrint().printResult(new Mapper().convertInToOut(queue.take()));
+                if (queue.take().getMessageType().equals(MessageType.POISON_PILL.getMessageType())) {
+                    return;
+                }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -24,10 +24,6 @@ public class OrderIn {
         this.line = line;
     }
 
-    public void setLine(String line) {
-        this.line = line;
-    }
-
     public String getLine() {
         return line;
     }
@@ -80,6 +76,10 @@ public class OrderIn {
         this.messageType = messageType;
     }
 
+    public void setLine(String line) {
+        this.line = line;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -110,6 +110,6 @@ public class OrderIn {
 
     @Override
     public String toString() {
-        return String.format("MessageIn: { orderId = %s, amount = %s, currency = %s, comment = %s, filename = %s, messageType = %s, line = &s }", orderId, amount, currency, comment, fileName, messageType, line);
+        return String.format("MessageIn: { orderId = %s, amount = %s, currency = %s, comment = %s, filename = %s, messageType = %s, line = %s}", orderId, amount, currency, comment, fileName, messageType, line);
     }
 }
