@@ -23,7 +23,7 @@ public class Mapper {
         return messageOut;
     }
 
-    public String buildErrorMessage(OrderIn message) {
+    private String buildErrorMessage(String param, String value) {
         return null;
     }
 

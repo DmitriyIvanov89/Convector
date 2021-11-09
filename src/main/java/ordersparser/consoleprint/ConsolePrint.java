@@ -10,8 +10,8 @@ public class ConsolePrint {
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            String parseResult = mapper.writeValueAsString(messageOut);
-            System.out.println(parseResult);
+            String result = mapper.writeValueAsString(messageOut);
+            System.out.println(result);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
