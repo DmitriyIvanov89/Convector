@@ -60,7 +60,12 @@ public class OrdersParser {
             }
         }
 
-//        countDownLatch.await();
+        countDownLatch.await();
+
+        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
+            queue.put(new OrderIn(MessageType.POISON_PILL.toString()));
+        }
+
         executorService.shutdown();
     }
 }
