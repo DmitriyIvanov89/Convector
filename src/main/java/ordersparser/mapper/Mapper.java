@@ -23,8 +23,10 @@ public class Mapper {
         return messageOut;
     }
 
-    public String buildErrorMessage(OrderIn message) {
-        return null;
+    public String checkValue(String param, String value) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        return stringBuilder.toString();
     }
 
 }
