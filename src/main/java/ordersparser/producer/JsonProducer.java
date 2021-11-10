@@ -5,34 +5,33 @@ import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
 
 public class JsonProducer implements Runnable {
 
     private final String filePath;
     private final BlockingQueue<OrderIn> queue;
-    private final MessageType type;
+    private final CountDownLatch countDownLatch;
 
-    public JsonProducer(String filePath, BlockingQueue<OrderIn> queue, MessageType type) {
+    public JsonProducer(String filePath, BlockingQueue<OrderIn> queue, CountDownLatch countDownLatch) {
         this.filePath = filePath;
         this.queue = queue;
-        this.type = type;
+        this.countDownLatch = countDownLatch;
     }
 
     @Override
     public void run() {
-
         String line;
         int currLine = 0;
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
-            ObjectMapper objectMapper = new ObjectMapper();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             while ((line = reader.readLine()) != null) {
+                ObjectMapper mapper = new ObjectMapper();
                 currLine++;
-                OrderIn message = objectMapper.readValue(line, OrderIn.class);
+                OrderIn message = mapper.readValue(line, OrderIn.class);
                 message.setFileName(Paths.get(filePath).getFileName().toString());
-                message.setMessageType(type.getMessageType());
+                message.setMessageType(MessageType.REGULAR.getMessageType());
                 message.setLine(String.valueOf(currLine));
                 queue.put(message);
             }
@@ -41,7 +40,7 @@ public class JsonProducer implements Runnable {
         }
     }
 
-    public MessageType getType() {
-        return type;
+    public ProducerType getType() {
+        return ProducerType.JSONL;
     }
 }

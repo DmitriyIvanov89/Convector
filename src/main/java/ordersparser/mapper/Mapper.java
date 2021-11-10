@@ -28,5 +28,4 @@ public class Mapper {
 
         return stringBuilder.toString();
     }
-
 }
