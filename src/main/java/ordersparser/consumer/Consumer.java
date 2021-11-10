@@ -20,7 +20,7 @@ public class Consumer implements Runnable {
     public void run() {
 
         try {
-            OrderIn message = null;
+            OrderIn message;
             while (!(message = queue.take()).getMessageType().equals(MessageType.POISON_PILL.toString())) {
                 new ConsolePrint().printResult(new Mapper().convertInToOut(message));
             }
