@@ -29,8 +29,8 @@ public class OrdersParser {
         Map<String, String> files = getFiles(args);
         BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 
-        runProducers(files, queue);
         runConsumers(queue);
+        runProducers(files, queue);
 
     }
 
