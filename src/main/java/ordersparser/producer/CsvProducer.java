@@ -7,7 +7,6 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
@@ -38,6 +37,8 @@ public class CsvProducer implements Runnable {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        countDownLatch.countDown();
     }
 
     public ProducerType getType() {

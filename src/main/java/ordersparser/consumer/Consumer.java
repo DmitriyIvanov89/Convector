@@ -4,6 +4,7 @@ import ordersparser.consoleprint.ConsolePrint;
 import ordersparser.mapper.Mapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
+import ordersparser.model.OrderOut;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -19,8 +20,9 @@ public class Consumer implements Runnable {
     public void run() {
 
         try {
-            while (!queue.take().getMessageType().equals(MessageType.POISON_PILL.toString())) {
-                new ConsolePrint().printResult(new Mapper().convertInToOut(queue.take()));
+            OrderIn message;
+            while (!(message = queue.take()).getMessageType().equals(MessageType.POISON_PILL.toString())) {
+                new ConsolePrint().printResult(new Mapper().convertInToOut(message));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
