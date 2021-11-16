@@ -4,7 +4,6 @@ import ordersparser.consoleprint.ConsolePrint;
 import ordersparser.mapper.Mapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
-import ordersparser.model.OrderOut;
 
 import java.util.concurrent.BlockingQueue;
 
