@@ -14,7 +14,7 @@ public class OrderIn {
     public OrderIn() {
     }
 
-    public OrderIn(String messageType) {
+    public OrderIn(String messageType)  {
         this.messageType = messageType;
     }
 

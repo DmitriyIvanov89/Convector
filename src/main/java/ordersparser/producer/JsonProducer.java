@@ -5,6 +5,7 @@ import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
@@ -24,7 +25,7 @@ public class JsonProducer implements Runnable {
     @Override
     public void run() {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
             String line;
             int currLine = 0;
             while ((line = reader.readLine()) != null) {
