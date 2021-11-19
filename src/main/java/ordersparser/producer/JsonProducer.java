@@ -35,6 +35,7 @@ public class JsonProducer implements Runnable {
                 message.setMessageType(MessageType.REGULAR.getMessageType());
                 message.setLine(String.valueOf(currLine));
                 queue.put(message);
+                System.out.println(queue);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
