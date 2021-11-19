@@ -2,8 +2,8 @@
 import ordersparser.consumer.Consumer;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
-import ordersparser.producer.CsvProducer;
-import ordersparser.producer.JsonProducer;
+import ordersparser.producers.CsvProducer;
+import ordersparser.producers.JsonProducer;
 import ordersparser.validator.Validator;
 
 import java.util.HashMap;

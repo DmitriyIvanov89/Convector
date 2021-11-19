@@ -1,8 +1,9 @@
-package ordersparser.producer;
+package ordersparser.producers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
+import ordersparser.model.ProducerType;
 
 import java.io.*;
 import java.nio.file.Files;

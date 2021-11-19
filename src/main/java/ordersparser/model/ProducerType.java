@@ -1,4 +1,4 @@
-package ordersparser.producer;
+package ordersparser.model;
 
 import java.util.HashMap;
 import java.util.Map;

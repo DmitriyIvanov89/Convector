@@ -1,6 +1,6 @@
 package ordersparser.validator;
 
-import ordersparser.producer.ProducerType;
+import ordersparser.model.ProducerType;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -1,7 +1,8 @@
-package ordersparser.producer;
+package ordersparser.producers;
 
 import ordersparser.model.MessageType;
 import ordersparser.model.OrderIn;
+import ordersparser.model.ProducerType;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
