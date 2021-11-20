@@ -1,7 +1,5 @@
 package ordersparser.model;
 
-import java.util.Objects;
-
 public class Order {
 
     private long orderId;
