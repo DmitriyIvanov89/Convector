@@ -1,5 +1,6 @@
 package ordersparser.model;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Objects;
@@ -10,20 +11,40 @@ public class OrderOut {
     private Float amount;
     @JsonIgnore
     private String currency;
+=======
+public class OrderOut {
+
+    private long id;
+    private double amount;
+    private Currency currency;
+>>>>>>> a953ae2970b50ea266d53883416cba3e04577e3a
     private String comment;
     private String fileName;
-    private Integer line;
-    private String result;
+    private long line;
+    private String parseResult;
 
-    public Integer getId() {
+    public OrderOut() {
+    }
+
+    public OrderOut(Long id, Double amount, Currency currency, String comment, String fileName, Long line, String parseResult) {
+        this.id = id;
+        this.amount = amount;
+        this.currency = currency;
+        this.comment = comment;
+        this.fileName = fileName;
+        this.line = line;
+        this.parseResult = parseResult;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public Float getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
@@ -35,23 +56,23 @@ public class OrderOut {
         return fileName;
     }
 
-    public Integer getLine() {
+    public long getLine() {
         return line;
     }
 
     public String getResult() {
-        return result;
+        return parseResult;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -63,53 +84,44 @@ public class OrderOut {
         this.fileName = fileName;
     }
 
-    public void setLine(Integer line) {
+    public void setLine(Long line) {
         this.line = line;
     }
 
     public void setResult(String result) {
-        this.result = result;
+        this.parseResult = parseResult;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        OrderOut orderOut = (OrderOut) obj;
-        return Objects.equals(id, orderOut.id)
-                && Objects.equals(amount, orderOut.amount)
-                && Objects.equals(line, orderOut.line)
-                && currency.equals(orderOut.currency)
-                && fileName.equals(orderOut.fileName)
-                && line.equals(orderOut.line)
-                && result.equals(orderOut.result);
-
+        if (obj == null || obj.getClass() != getClass()) return false;
+        OrderOut order = (OrderOut) obj;
+        return id == order.id
+                && amount == order.amount
+                && line == order.line
+                && currency == order.currency
+                && comment.equals(order.comment)
+                && fileName.equals(order.fileName)
+                && parseResult.equals(order.parseResult);
     }
 
     @Override
     public int hashCode() {
         int prime = 31;
-        int result1 = 1;
-        result1 = prime * result1 + (id == null ? 0 : id.hashCode());
-        result1 = prime * result1 + (amount == null ? 0 : amount.hashCode());
-        result1 = prime * result1 + (line == null ? 0 : line.hashCode());
-        result1 = prime * result1 + (currency == null ? 0 : currency.hashCode());
-        result1 = prime * result1 + (fileName == null ? 0 : fileName.hashCode());
-        result1 = prime * result1 + (line == null ? 0 : line.hashCode());
-        result1 = prime * result1 + (result == null ? 0 : result.hashCode());
-        return result1;
+        int result = 1;
+        result = (int) (prime * result + id);
+        result = (int) (prime * result + amount);
+        result = (int) (prime * result + line);
+        result = prime * result + (currency == null ? 0 : currency.hashCode());
+        result = prime * result + (comment == null ? 0 : comment.hashCode());
+        result = prime * result + (fileName == null ? 0 : fileName.hashCode());
+        result = prime * result + (parseResult == null ? 0 : parseResult.hashCode());
+        return result;
     }
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("OrderOut: {");
-        stringBuilder.append("id: ").append(id);
-        stringBuilder.append(", amount: ").append(amount);
-        stringBuilder.append(", comment: ").append(comment);
-        stringBuilder.append(", filename: ").append(fileName);
-        stringBuilder.append(", line: ").append(line);
-        stringBuilder.append(", result: ").append(result);
-        return stringBuilder.toString();
+        return String.format("OrderOut: {id: %d, amount: %f, file name: %s, line: %d, result: %s}", id, amount, fileName, line, parseResult);
     }
 }

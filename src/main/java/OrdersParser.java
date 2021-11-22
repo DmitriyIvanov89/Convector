@@ -1,9 +1,8 @@
 
 import ordersparser.consumer.Consumer;
-import ordersparser.model.MessageType;
-import ordersparser.model.OrderIn;
-import ordersparser.producer.CsvProducer;
-import ordersparser.producer.JsonProducer;
+import ordersparser.model.Order;
+import ordersparser.producers.CsvProducer;
+import ordersparser.producers.JsonProducer;
 import ordersparser.validator.Validator;
 
 import java.util.HashMap;
@@ -14,27 +13,23 @@ import java.util.concurrent.*;
 public class OrdersParser {
 
     private static final int QUEUE_CAPACITY = 10;
-    private static final int MAX_CONSUMERS_COUNT = 1;
     private static final int MAX_PRODUCERS_COUNT = 2;
+    private static final int MAX_CONSUMERS_COUNT = Runtime.getRuntime().availableProcessors();
 
 
     public static void main(String[] args) throws InterruptedException {
 
-        if (args.length != 0) {
-            new Validator().validateArgs(args);
-        } else {
-            System.out.println("Incorrect args!");
+        if (new Validator().validateArgs(args)) {
+            BlockingDeque<Order> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
+//            runConsumers(messageQueue);
+            Map<String, String> files = getFiles(args);
+            runProducers(files, messageQueue);
+            System.out.println("test");
+
         }
-
-        Map<String, String> files = getFiles(args);
-        BlockingQueue<OrderIn> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-
-        runConsumers(queue);
-        runProducers(files, queue);
-
     }
 
-    public static Map<String, String> getFiles(String[] args) {
+    private static Map<String, String> getFiles(String[] args) {
         Map<String, String> files = new HashMap<>();
         for (String path : args) {
             files.put(path, path.substring(path.lastIndexOf(".") + 1).toUpperCase());
@@ -42,13 +37,13 @@ public class OrdersParser {
         return files;
     }
 
-    public static void runConsumers(BlockingQueue<OrderIn> queue) {
+    private static void runConsumers(BlockingQueue<Order> queue) {
         for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
             new Thread(new Consumer(queue)).start();
         }
     }
 
-    public static void runProducers(Map<String, String> files, BlockingQueue<OrderIn> queue) throws InterruptedException {
+    private static void runProducers(Map<String, String> files, BlockingQueue<Order> queue) throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(files.size());
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
         for (Map.Entry<String, String> entry : files.entrySet()) {
@@ -61,9 +56,9 @@ public class OrdersParser {
         }
 
         countDownLatch.await();
-        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
-            queue.put(new OrderIn(MessageType.POISON_PILL.toString()));
-        }
         executorService.shutdown();
+//        for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
+//            queue.put(new OrderIn(MessageType.POISON_PILL.toString()));
+//        }
     }
 }
