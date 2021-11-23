@@ -2,8 +2,10 @@ package ordersparser.producers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import ordersparser.model.Currency;
 import ordersparser.model.Order;
+import ordersparser.model.OrderWrong;
 import ordersparser.model.ProducerType;
 
 import java.io.*;
@@ -28,18 +30,22 @@ public class JsonProducer implements Runnable {
 
     @Override
     public void run() {
-        String line;
-        long stringNumber = 0;
+
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            String line;
+            long stringNumber = 0;
+            String errors;
+            Type type = new TypeToken<Map<String, String>>() {
+            }.getType();
             while ((line = reader.readLine()) != null) {
+                OrderWrong orderWrong;
                 stringNumber++;
                 try {
-                    Type type = new TypeToken<Map<String, String>>() {
-                    }.getType();
-                    Order order = new Gson().fromJson(line, Order.class);
+                    Order order = toOrder(new Gson().fromJson(line, type));
+                    
                     /*
-                    * order.setValues
-                    * if errors.length() = 0 -> queue.put(order), else queue.put(orderEntry)*/
+                     * order.setValues
+                     * if errors.length() = 0 -> queue.put(order), else queue.put(orderEntry)*/
                 } catch (RuntimeException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -50,8 +56,9 @@ public class JsonProducer implements Runnable {
         countDownLatch.countDown();
     }
 
-    private void toOrder(Map<String, String> values, Order order) {
+    private Order toOrder(Map<String, String> values) {
         StringBuilder errors = new StringBuilder();
+        Order order = new Order();
 
         try {
             if (values.get("orderId") != null) {
@@ -97,6 +104,11 @@ public class JsonProducer implements Runnable {
             errors.append(e);
         }
 
+        if (errors.toString().isEmpty()) {
+            return order;
+        } else {
+            throw new RuntimeException(errors.toString());
+        }
     }
 
     public ProducerType getType() {

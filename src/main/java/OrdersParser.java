@@ -1,10 +1,12 @@
 
+import com.google.gson.reflect.TypeToken;
 import ordersparser.consumer.Consumer;
 import ordersparser.model.Order;
 import ordersparser.producers.CsvProducer;
 import ordersparser.producers.JsonProducer;
 import ordersparser.validator.Validator;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -21,11 +23,10 @@ public class OrdersParser {
 
         if (new Validator().validateArgs(args)) {
             BlockingDeque<Order> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
-//            runConsumers(messageQueue);
+            runConsumers(messageQueue);
             Map<String, String> files = getFiles(args);
             runProducers(files, messageQueue);
             System.out.println("test");
-
         }
     }
 

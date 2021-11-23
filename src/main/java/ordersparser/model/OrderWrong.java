@@ -2,21 +2,20 @@ package ordersparser.model;
 
 import java.util.Objects;
 
-public class OrderEntry {
+public class OrderWrong {
 
     private long lineNumber;
     private String fileName;
     private String error;
-    private Order playLoad;
+//    private Order playLoad;
 
-    public OrderEntry() {
+    public OrderWrong() {
     }
 
-    public OrderEntry(long lineNumber, String fileName, String error, Order playLoad) {
+    public OrderWrong(String fileName,long lineNumber, String error) {
         this.lineNumber = lineNumber;
         this.fileName = fileName;
         this.error = error;
-        this.playLoad = playLoad;
     }
 
     public long getLineNumber() {
@@ -31,9 +30,9 @@ public class OrderEntry {
         return error;
     }
 
-    public Order getPlayLoad() {
-        return playLoad;
-    }
+//    public Order getPlayLoad() {
+//        return playLoad;
+//    }
 
     public void setLineNumber(long lineNumber) {
         this.lineNumber = lineNumber;
@@ -47,16 +46,12 @@ public class OrderEntry {
         this.error = error;
     }
 
-    public void setPlayLoad(Order playLoad) {
-        this.playLoad = playLoad;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderEntry that = (OrderEntry) o;
-        return lineNumber == that.lineNumber && Objects.equals(fileName, that.fileName) && Objects.equals(error, that.error) && Objects.equals(playLoad, that.playLoad);
+        OrderWrong that = (OrderWrong) o;
+        return lineNumber == that.lineNumber && Objects.equals(fileName, that.fileName) && Objects.equals(error, that.error);
     }
 
     @Override
@@ -66,12 +61,11 @@ public class OrderEntry {
         result = (int) (prime * result + lineNumber);
         result = prime * result + (fileName == null ? 0 : fileName.hashCode());
         result = prime * result + (error == null ? 0 : error.hashCode());
-        result = prime * result + (playLoad == null ? 0 : playLoad.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("OrderEntry: {FileName: %s, LineNumber: %d, error: %s, Order: %s}", fileName, lineNumber, error, playLoad);
+        return String.format("OrderEntry: {FileName: %s, LineNumber: %d, error: %s}", fileName, lineNumber, error);
     }
 }

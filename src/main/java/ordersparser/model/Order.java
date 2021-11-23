@@ -14,6 +14,10 @@ public class Order {
         this.comment = comment;
     }
 
+    public Order() {
+
+    }
+
     public Long getOrderId() {
         return orderId;
     }
