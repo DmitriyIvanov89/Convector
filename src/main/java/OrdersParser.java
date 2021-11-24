@@ -1,10 +1,17 @@
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import ordersparser.consumer.Consumer;
 import ordersparser.model.Order;
 import ordersparser.producers.CsvProducer;
 import ordersparser.producers.JsonProducer;
 import ordersparser.validator.Validator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -17,15 +24,14 @@ public class OrdersParser {
     private static final int MAX_CONSUMERS_COUNT = Runtime.getRuntime().availableProcessors();
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
         if (new Validator().validateArgs(args)) {
             BlockingDeque<Order> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
-//            runConsumers(messageQueue);
+            runConsumers(messageQueue);
             Map<String, String> files = getFiles(args);
             runProducers(files, messageQueue);
             System.out.println("test");
-
         }
     }
 

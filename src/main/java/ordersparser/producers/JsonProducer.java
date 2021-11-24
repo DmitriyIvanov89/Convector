@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import ordersparser.model.Currency;
 import ordersparser.model.Order;
+import ordersparser.model.OrderWrong;
 import ordersparser.model.ProducerType;
 
 import java.io.*;
@@ -28,34 +29,39 @@ public class JsonProducer implements Runnable {
 
     @Override
     public void run() {
-//        String line;
-//        long stringNumber = 0;
-//        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
-//            while ((line = reader.readLine()) != null) {
-//                stringNumber++;
-//                try {
-//                    Type type = new TypeToken<Map<String, String>>() {
-//                    }.getType();
-//                    Order order = new Gson().fromJson(line, Order.class);
-//                    /*
-//                    * order.setValues
-//                    * if errors.length() = 0 -> queue.put(order), else queue.put(orderEntry)*/
-//                } catch (RuntimeException | InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        countDownLatch.countDown();
+
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            String line;
+            long lineNumber = 0;
+            Type type = new TypeToken<Map<String, String>>() {
+            }.getType();
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                try {
+                    Order order = toOrder(new Gson().fromJson(line, type));
+                    if (order.getError().length() > 0) {
+                        queue.put(order);
+                    } else {
+                        queue.put(new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError()));
+                    }
+                } catch (RuntimeException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        countDownLatch.countDown();
     }
 
-    private void toOrder(Map<String, String> values, Order order) {
+    private Order toOrder(Map<String, String> orderValues) {
         StringBuilder errors = new StringBuilder();
+        Order order = new Order();
+        OrderWrong orderWrong = new OrderWrong();
 
         try {
-            if (values.get("orderId") != null) {
-                order.setOrderId(Long.parseLong(values.get("orderId")));
+            if (orderValues.get("orderId") != null) {
+                order.setOrderId(Long.parseLong(orderValues.get("orderId")));
             }
         } catch (RuntimeException e) {
             if (errors.length() > 0) {
@@ -65,8 +71,8 @@ public class JsonProducer implements Runnable {
         }
 
         try {
-            if (values.get("amount") != null) {
-                order.setAmount(Double.parseDouble(values.get("amount")));
+            if (orderValues.get("amount") != null) {
+                order.setAmount(Double.parseDouble(orderValues.get("amount")));
             }
         } catch (RuntimeException e) {
             if (errors.length() > 0) {
@@ -76,8 +82,8 @@ public class JsonProducer implements Runnable {
         }
 
         try {
-            if (values.get("currency") != null) {
-                order.setCurrency(Currency.valueOf(values.get("currency")));
+            if (orderValues.get("currency") != null) {
+                order.setCurrency(Currency.valueOf(orderValues.get("currency")));
             }
         } catch (RuntimeException e) {
             if (errors.length() > 0) {
@@ -87,8 +93,8 @@ public class JsonProducer implements Runnable {
         }
 
         try {
-            if (values.get("comment") != null) {
-                order.setComment(values.get("comment"));
+            if (orderValues.get("comment") != null) {
+                order.setComment(orderValues.get("comment"));
             }
         } catch (RuntimeException e) {
             if (errors.length() > 0) {
@@ -97,6 +103,8 @@ public class JsonProducer implements Runnable {
             errors.append(e);
         }
 
+        order.setError(errors.toString());
+        return order;
     }
 
     public ProducerType getType() {

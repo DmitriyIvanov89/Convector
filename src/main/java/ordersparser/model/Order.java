@@ -6,12 +6,24 @@ public class Order {
     private double amount;
     private Currency currency;
     private String comment;
+    private String filename;
+    private long lineNumber;
+    private String error;
+
+    public Order() {
+    }
 
     public Order(Long orderId, double amount, Currency currency, String comment) {
         this.orderId = orderId;
         this.amount = amount;
         this.currency = currency;
         this.comment = comment;
+    }
+
+    public Order(String filename, long lineNumber, String error) {
+        this.filename = filename;
+        this.lineNumber = lineNumber;
+        this.error = error;
     }
 
     public Long getOrderId() {
@@ -30,6 +42,18 @@ public class Order {
         return comment;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public long getLineNumber() {
+        return lineNumber;
+    }
+
+    public String getError() {
+        return error;
+    }
+
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
@@ -44,6 +68,22 @@ public class Order {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public void setLineNumber(long lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     @Override

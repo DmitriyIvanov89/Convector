@@ -1,23 +1,10 @@
 package ordersparser.model;
 
-<<<<<<< HEAD
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.Objects;
-
-public class OrderOut {
-
-    private Integer id;
-    private Float amount;
-    @JsonIgnore
-    private String currency;
-=======
 public class OrderOut {
 
     private long id;
     private double amount;
     private Currency currency;
->>>>>>> a953ae2970b50ea266d53883416cba3e04577e3a
     private String comment;
     private String fileName;
     private long line;
