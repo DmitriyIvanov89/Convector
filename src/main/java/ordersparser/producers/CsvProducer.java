@@ -1,14 +1,13 @@
 package ordersparser.producers;
 
-import ordersparser.model.MessageType;
-import ordersparser.model.Order;
-import ordersparser.model.ProducerType;
+import ordersparser.model.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 
@@ -32,14 +31,58 @@ public class CsvProducer implements Runnable {
 //            int currLine = 0;
 //            for (CSVRecord record : records) {
 //                currLine++;
-//                Order message = new Order(record.get(0), record.get(1), record.get(2), record.get(3), Paths.get(filePath).getFileName().toString(), MessageType.REGULAR.getMessageType(), String.valueOf(currLine));
-//                queue.put(message);
+//
+//                queue.put();
 //            }
 //        } catch (IOException | InterruptedException e) {
 //            e.printStackTrace();
 //        }
 
-//        countDownLatch.countDown();
+        countDownLatch.countDown();
+    }
+
+    public Order toOrder(String[] orderValues) {
+        StringBuilder errors = new StringBuilder();
+        Order order = new Order();
+
+        try {
+            order.setOrderId(Long.parseLong(orderValues[0]));
+        } catch (RuntimeException e) {
+            if (errors.length() > 0) {
+                errors.append(" , ");
+            }
+            errors.append(e);
+        }
+
+        try {
+            order.setAmount(Double.parseDouble(orderValues[1]));
+        } catch (RuntimeException e) {
+            if (errors.length() > 0) {
+                errors.append(" , ");
+            }
+            errors.append(e);
+        }
+
+        try {
+            order.setCurrency(Currency.valueOf(orderValues[2]));
+        } catch (RuntimeException e) {
+            if (errors.length() > 0) {
+                errors.append(" , ");
+            }
+            errors.append(e);
+        }
+
+        try {
+            order.setComment(orderValues[3]);
+        } catch (RuntimeException e) {
+            if (errors.length() > 0) {
+                errors.append(" , ");
+            }
+            errors.append(e);
+        }
+
+        order.setError(errors.toString());
+        return order;
     }
 
     public ProducerType getType() {

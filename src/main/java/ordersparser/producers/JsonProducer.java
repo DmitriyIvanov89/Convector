@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import ordersparser.model.Currency;
 import ordersparser.model.Order;
-import ordersparser.model.OrderWrong;
 import ordersparser.model.ProducerType;
 
 import java.io.*;
@@ -40,9 +39,9 @@ public class JsonProducer implements Runnable {
                 try {
                     Order order = toOrder(new Gson().fromJson(line, type));
                     if (order.getError().length() > 0) {
-                        queue.put(order);
-                    } else {
                         queue.put(new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError()));
+                    } else {
+                        queue.put(order);
                     }
                 } catch (RuntimeException | InterruptedException e) {
                     e.printStackTrace();
@@ -57,7 +56,6 @@ public class JsonProducer implements Runnable {
     private Order toOrder(Map<String, String> orderValues) {
         StringBuilder errors = new StringBuilder();
         Order order = new Order();
-        OrderWrong orderWrong = new OrderWrong();
 
         try {
             if (orderValues.get("orderId") != null) {

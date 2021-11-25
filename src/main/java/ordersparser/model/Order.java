@@ -70,10 +70,6 @@ public class Order {
         this.comment = comment;
     }
 
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
     public void setFilename(String filename) {
         this.filename = filename;
     }

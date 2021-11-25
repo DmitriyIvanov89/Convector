@@ -6,6 +6,9 @@ import ordersparser.model.Order;
 import ordersparser.producers.CsvProducer;
 import ordersparser.producers.JsonProducer;
 import ordersparser.validator.Validator;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,12 +29,20 @@ public class OrdersParser {
 
     public static void main(String[] args) throws InterruptedException, IOException {
 
-        if (new Validator().validateArgs(args)) {
-            BlockingDeque<Order> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
-            runConsumers(messageQueue);
-            Map<String, String> files = getFiles(args);
-            runProducers(files, messageQueue);
-            System.out.println("test");
+//        if (new Validator().validateArgs(args)) {
+//            BlockingDeque<Order> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
+//            runConsumers(messageQueue);
+//            Map<String, String> files = getFiles(args);
+//            runProducers(files, messageQueue);
+//            System.out.println("test");
+//        }
+        String path = ".\\src\\main\\resources\\orders.csv";
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+            String[] orderValues;
+            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+            for (CSVRecord record : records) {
+                System.out.println(record);
+            }
         }
     }
 
