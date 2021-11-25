@@ -1,6 +1,8 @@
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import ordersparser.consumer.Consumer;
 import ordersparser.model.Order;
 import ordersparser.producers.CsvProducer;
@@ -11,6 +13,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -27,22 +30,13 @@ public class OrdersParser {
     private static final int MAX_CONSUMERS_COUNT = Runtime.getRuntime().availableProcessors();
 
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException {
 
-//        if (new Validator().validateArgs(args)) {
-//            BlockingDeque<Order> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
-//            runConsumers(messageQueue);
-//            Map<String, String> files = getFiles(args);
-//            runProducers(files, messageQueue);
-//            System.out.println("test");
-//        }
-        String path = ".\\src\\main\\resources\\orders.csv";
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-            String[] orderValues;
-            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
-            for (CSVRecord record : records) {
-                System.out.println(record);
-            }
+        if (new Validator().validateArgs(args)) {
+            BlockingDeque<Order> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
+            runConsumers(messageQueue);
+            Map<String, String> files = getFiles(args);
+            runProducers(files, messageQueue);
         }
     }
 

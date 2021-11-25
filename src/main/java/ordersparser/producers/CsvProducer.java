@@ -1,5 +1,7 @@
 package ordersparser.producers;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import ordersparser.model.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -26,19 +28,23 @@ public class CsvProducer implements Runnable {
     @Override
     public void run() {
 
-//        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-//            CSVParser records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
-//            int currLine = 0;
-//            for (CSVRecord record : records) {
-//                currLine++;
-//
-//                queue.put();
-//            }
-//        } catch (IOException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try (CSVReader csvReader = new CSVReader(new FileReader(filePath))) {
+            String[] orderValues;
+            int lineNumber = 0;
+            while ((orderValues = csvReader.readNext()) != null) {
+                lineNumber++;
+                Order order = toOrder(orderValues);
+                if (order.getError().length() > 0) {
+                    queue.put(new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError()));
+                } else {
+                    queue.put(order);
+                }
+            }
+            countDownLatch.countDown();
 
-        countDownLatch.countDown();
+        } catch (IOException | CsvValidationException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public Order toOrder(String[] orderValues) {
