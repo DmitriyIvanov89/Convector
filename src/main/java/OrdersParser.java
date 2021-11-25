@@ -1,23 +1,8 @@
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
 import ordersparser.consumer.Consumer;
 import ordersparser.model.Order;
 import ordersparser.producers.CsvProducer;
 import ordersparser.producers.JsonProducer;
 import ordersparser.validator.Validator;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
