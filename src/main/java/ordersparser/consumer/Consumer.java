@@ -23,7 +23,7 @@ public class Consumer implements Runnable {
                 if (message.getMessageType() == MessageType.POISON_PILL) {
                     return;
                 }
-                new ConsolePrint().printResult(new Mapper().convertInToOut(message));
+                new ConsolePrint().printResult(new Mapper().orderToOrderOut(message));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

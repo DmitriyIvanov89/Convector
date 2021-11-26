@@ -1,7 +1,6 @@
 import ordersparser.consumer.Consumer;
 import ordersparser.model.Message;
 import ordersparser.model.MessageType;
-import ordersparser.model.Order;
 import ordersparser.producers.CsvProducer;
 import ordersparser.producers.JsonProducer;
 import ordersparser.validator.Validator;
@@ -22,7 +21,7 @@ public class OrdersParser {
 
         if (new Validator().validateArgs(args)) {
             BlockingDeque<Message> messageQueue = new LinkedBlockingDeque<>(QUEUE_CAPACITY);
-//            runConsumers(messageQueue);
+            runConsumers(messageQueue);
             Map<String, String> files = getFiles(args);
             runProducers(files, messageQueue);
         }
