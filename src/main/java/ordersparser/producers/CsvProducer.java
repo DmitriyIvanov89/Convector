@@ -3,23 +3,19 @@ package ordersparser.producers;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import ordersparser.model.*;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 
 public class CsvProducer implements Runnable {
 
     private final String filePath;
-    private final BlockingQueue<Order> queue;
+    private final BlockingQueue<Message> queue;
     private final CountDownLatch countDownLatch;
 
-    public CsvProducer(String filePath, BlockingQueue<Order> queue, CountDownLatch countDownLatch) {
+    public CsvProducer(String filePath, BlockingQueue<Message> queue, CountDownLatch countDownLatch) {
         this.filePath = filePath;
         this.queue = queue;
         this.countDownLatch = countDownLatch;
@@ -35,9 +31,9 @@ public class CsvProducer implements Runnable {
                 lineNumber++;
                 Order order = toOrder(orderValues);
                 if (order.getError().length() > 0) {
-                    queue.put(new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError()));
+                    queue.put(new Message(MessageType.REGULAR, new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError())));
                 } else {
-                    queue.put(order);
+                    queue.put(new Message(MessageType.REGULAR, order));
                 }
             }
             countDownLatch.countDown();

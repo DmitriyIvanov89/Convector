@@ -2,9 +2,7 @@ package ordersparser.producers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import ordersparser.model.Currency;
-import ordersparser.model.Order;
-import ordersparser.model.ProducerType;
+import ordersparser.model.*;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -17,10 +15,10 @@ import java.util.concurrent.CountDownLatch;
 public class JsonProducer implements Runnable {
 
     private final String filePath;
-    private final BlockingQueue<Order> queue;
+    private final BlockingQueue<Message> queue;
     private final CountDownLatch countDownLatch;
 
-    public JsonProducer(String filePath, BlockingQueue<Order> queue, CountDownLatch countDownLatch) {
+    public JsonProducer(String filePath, BlockingQueue<Message> queue, CountDownLatch countDownLatch) {
         this.filePath = filePath;
         this.queue = queue;
         this.countDownLatch = countDownLatch;
@@ -39,9 +37,9 @@ public class JsonProducer implements Runnable {
                 try {
                     Order order = toOrder(new Gson().fromJson(line, type));
                     if (order.getError().length() > 0) {
-                        queue.put(new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError()));
+                        queue.put(new Message(MessageType.REGULAR, new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError())));
                     } else {
-                        queue.put(order);
+                        queue.put(new Message(MessageType.REGULAR, order));
                     }
                 } catch (RuntimeException | InterruptedException e) {
                     e.printStackTrace();
