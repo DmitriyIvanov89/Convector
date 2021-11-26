@@ -6,7 +6,6 @@ import ordersparser.model.OrderOut;
 
 public class ConsolePrint {
 
-
     public void printResult(OrderOut orderOut) {
 
         try {
