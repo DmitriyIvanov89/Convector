@@ -36,7 +36,7 @@ public class OrdersParser {
         return files;
     }
 
-    private static void runConsumers(BlockingQueue<Order> queue) {
+    private static void runConsumers(BlockingQueue<Message> queue) {
         for (int i = 0; i < MAX_CONSUMERS_COUNT; i++) {
             new Thread(new Consumer(queue)).start();
         }
