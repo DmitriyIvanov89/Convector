@@ -30,11 +30,9 @@ public class CsvProducer implements Runnable {
             while ((orderValues = csvReader.readNext()) != null) {
                 lineNumber++;
                 Order order = toOrder(orderValues);
-                if (order.getError().length() > 0) {
-                    queue.put(new Message(MessageType.REGULAR, new Order(Paths.get(filePath).getFileName().toString(), lineNumber, order.getError())));
-                } else {
-                    queue.put(new Message(MessageType.REGULAR, order));
-                }
+                order.setFilename(Paths.get(filePath).getFileName().toString());
+                order.setLineNumber(lineNumber);
+                queue.put(new Message(MessageType.REGULAR, order));
             }
             countDownLatch.countDown();
 
@@ -53,7 +51,7 @@ public class CsvProducer implements Runnable {
             if (errors.length() > 0) {
                 errors.append(" , ");
             }
-            errors.append(e);
+            errors.append("Invalid value in field orderId");
         }
 
         try {
@@ -62,7 +60,7 @@ public class CsvProducer implements Runnable {
             if (errors.length() > 0) {
                 errors.append(" , ");
             }
-            errors.append(e);
+            errors.append("Invalid value in field amount");
         }
 
         try {
@@ -71,7 +69,7 @@ public class CsvProducer implements Runnable {
             if (errors.length() > 0) {
                 errors.append(" , ");
             }
-            errors.append(e);
+            errors.append("Invalid value in field currency");
         }
 
         try {
@@ -80,7 +78,7 @@ public class CsvProducer implements Runnable {
             if (errors.length() > 0) {
                 errors.append(" , ");
             }
-            errors.append(e);
+            errors.append("Invalid value in field comment");
         }
 
         order.setError(errors.toString());

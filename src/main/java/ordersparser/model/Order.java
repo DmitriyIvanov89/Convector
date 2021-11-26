@@ -26,6 +26,16 @@ public class Order {
         this.error = error;
     }
 
+    public Order(long orderId, double amount, Currency currency, String comment, String filename, long lineNumber, String error) {
+        this.orderId = orderId;
+        this.amount = amount;
+        this.currency = currency;
+        this.comment = comment;
+        this.filename = filename;
+        this.lineNumber = lineNumber;
+        this.error = error;
+    }
+
     public Long getOrderId() {
         return orderId;
     }

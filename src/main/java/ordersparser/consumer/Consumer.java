@@ -10,6 +10,8 @@ import java.util.concurrent.BlockingQueue;
 public class Consumer implements Runnable {
 
     private final BlockingQueue<Message> queue;
+    private final Mapper mapper = new Mapper();
+    private final ConsolePrint consolePrint = new ConsolePrint();
 
     public Consumer(BlockingQueue<Message> queue) {
         this.queue = queue;
@@ -23,7 +25,7 @@ public class Consumer implements Runnable {
                 if (message.getMessageType() == MessageType.POISON_PILL) {
                     return;
                 }
-                new ConsolePrint().printResult(new Mapper().orderToOrderOut(message));
+                consolePrint.printResult(mapper.orderToOrderOut(message));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
