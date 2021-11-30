@@ -39,6 +39,11 @@ public class JsonProducer implements Runnable {
                     order.setFilename(Paths.get(filePath).getFileName().toString());
                     order.setLineNumber(lineNumber);
                     queue.put(new Message(MessageType.REGULAR, order));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } catch (RuntimeException | InterruptedException e) {
                     e.printStackTrace();
                 }
