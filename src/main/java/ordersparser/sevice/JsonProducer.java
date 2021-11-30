@@ -1,4 +1,4 @@
-package ordersparser.producers;
+package ordersparser.sevice;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

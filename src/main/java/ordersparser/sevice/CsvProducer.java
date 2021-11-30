@@ -1,4 +1,4 @@
-package ordersparser.producers;
+package ordersparser.sevice;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
