@@ -26,7 +26,7 @@ public class OrdersParser {
             runProducers(files, messageQueue);
         }
     }
-
+    // refactor this method with stream
     private static Map<String, String> getFiles(String[] args) {
         Map<String, String> files = new HashMap<>();
         for (String path : args) {
@@ -40,7 +40,7 @@ public class OrdersParser {
             new Thread(new Consumer(queue)).start();
         }
     }
-
+    // added producer type
     private static void runProducers(Map<String, String> files, BlockingQueue<Message> queue) throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(files.size());
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
@@ -59,4 +59,5 @@ public class OrdersParser {
             queue.put(new Message(MessageType.POISON_PILL, null));
         }
     }
+    // added validate args method & getFileExtension
 }
