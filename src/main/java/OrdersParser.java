@@ -9,10 +9,8 @@ import ordersparser.sevice.JsonProducer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
-
 
 public class OrdersParser {
 
@@ -23,9 +21,9 @@ public class OrdersParser {
     public static void main(String[] args) throws InterruptedException {
 
         if (validateArgs(args)) {
-            BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
+            BlockingQueue<Message> queue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
             runConsumers(queue);
-            Map<String, String> files = getFiles(args);
+            Map<String, String > files = getFiles(args);
             runProducers(files, queue);
         }
     }
