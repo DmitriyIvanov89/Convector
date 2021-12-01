@@ -1,4 +1,3 @@
-
 import ordersparser.consumer.Consumer;
 import ordersparser.model.FileExtensions;
 import ordersparser.model.Message;
