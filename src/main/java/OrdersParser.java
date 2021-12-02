@@ -1,5 +1,4 @@
 import ordersparser.consumer.Consumer;
-import ordersparser.model.FileExtensions;
 import ordersparser.model.Message;
 import ordersparser.model.MessageType;
 import ordersparser.model.ProducerType;
@@ -23,7 +22,7 @@ public class OrdersParser {
         if (validateArgs(args)) {
             BlockingQueue<Message> queue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
             runConsumers(queue);
-            Map<String, String > files = getFiles(args);
+            Map<String, String> files = getFiles(args);
             runProducers(files, queue);
         }
     }
@@ -49,10 +48,10 @@ public class OrdersParser {
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_PRODUCERS_COUNT);
 
         for (Map.Entry<String, String> entry : files.entrySet()) {
-            if (entry.getValue().equals(FileExtensions.JSONL.getFileExtension())) {
+            if (entry.getValue().equals(ProducerType.JSONL.getType())) {
                 executorService.execute(new JsonProducer(entry.getKey(), queue, countDownLatch));
             }
-            if (entry.getValue().equals(FileExtensions.CSV.getFileExtension())) {
+            if (entry.getValue().equals(ProducerType.CSV.getType())) {
                 executorService.execute(new CsvProducer(entry.getKey(), queue, countDownLatch));
             }
         }
