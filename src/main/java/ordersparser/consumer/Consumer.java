@@ -4,14 +4,11 @@ import ordersparser.consoleprint.ConsolePrint;
 import ordersparser.mapper.Mapper;
 import ordersparser.model.Message;
 import ordersparser.model.MessageType;
-
 import java.util.concurrent.BlockingQueue;
 
 public class Consumer implements Runnable {
 
     private final BlockingQueue<Message> queue;
-    private final Mapper mapper = new Mapper();
-    private final ConsolePrint consolePrint = new ConsolePrint();
 
     public Consumer(BlockingQueue<Message> queue) {
         this.queue = queue;
@@ -25,11 +22,10 @@ public class Consumer implements Runnable {
                 if (message.getMessageType() == MessageType.POISON_PILL) {
                     return;
                 }
-                consolePrint.printResult(mapper.orderToOrderOut(message));
+                new ConsolePrint().printResult(new Mapper().orderToOrderOut(message));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }
